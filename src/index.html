@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cheatsheets</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: 'Fira Code', Consolas, monospace;
+        background: #0d1117;
+        color: #c9d1d9;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px 24px;
+        padding: 8px 16px;
+        background: #161b22;
+        border-bottom: 1px solid #30363d;
+      }
+
+      strong { font-size: 16px; }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 16px;
+        font-size: 14px;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        color: #7ee787;
+        text-decoration: none;
+      }
+
+      a:hover { text-decoration: underline; }
+
+      a:focus-visible {
+        outline: 2px solid #58a6ff;
+        outline-offset: 3px;
+      }
+
+      .deck-link { color: #58a6ff; }
+
+      main {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      @media (max-width: 520px) {
+        header { padding: 8px 12px; }
+        nav { width: 100%; gap: 4px 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>Cheatsheets</strong>
+      <nav aria-label="Documents">
+        <a class="deck-link" href="cheatsheets.html" target="_blank" rel="noopener"
+          aria-label="Ouvrir le deck seul dans un nouvel onglet">Deck Marp &#8599;</a>
+        <a href="cheatsheets.html" download="cheatsheets.html" aria-label="Telecharger le deck HTML">HTML</a>
+        <a href="cheatsheets.pdf" download aria-label="Telecharger le PDF">PDF</a>
+        <a href="cheatsheets.pptx" download aria-label="Telecharger le PowerPoint">PowerPoint</a>
+      </nav>
+    </header>
+    <main>
+      <iframe src="cheatsheets.html" title="Presentation Marp : Cheatsheets" allow="fullscreen" allowfullscreen></iframe>
+    </main>
+  </body>
+</html>
