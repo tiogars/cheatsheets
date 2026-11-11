@@ -141,216 +141,288 @@ strong {
 
 <!-- _class: lead -->
 
-<!--
-Presenter note:
+# Cheatsheets
 
-Start by framing the demo as a complete, reusable CRUD pattern:
+Maven / pnpm / Storybook / .NET
 
-tasks with reusable taxonomies, one contract, several clients, and a working console.
--->
+GitHub Actions / Azure DevOps / MUI
 
-# Task Management Solution
-
-Task workflows with reusable tags and hierarchical classifications, from PostgreSQL to clients and console.
+Commandes depuis la racine du projet concerne.
+Noms de projets, workflows et identifiants a adapter.
 
 ---
 
-<!--
-Presenter note:
+## Maven : compiler et tester
 
-This is a reference implementation for a real CRUD feature:
+**Prerequis :** JDK et Maven installes, projet avec `pom.xml`.
 
-small enough to explain, complete enough to show how the stack fits together.
--->
+```shell
+mvn --version
+mvn clean compile
+mvn test
+mvn "-Dtest=UserServiceTest" test
+mvn clean verify
+mvn install
+```
 
-## Purpose
-
-- Demonstrate task management and reusable taxonomy CRUD.
-- Keep the public object separate from JPA persistence.
-- Share one HTTP contract across Java, TypeScript, and Dart.
-- Include a practical React console and bulk data workflows.
-
----
-
-<!--
-Presenter note:
-
-Walk through the runtime stack from API to database, then to clients and console.
-
-Emphasize this is not just backend-only work.
--->
-
-## Runtime
-
-- Spring Boot APIs: `/api/v1/task`, `/api/v1/tag`, `/api/v1/nomenclature`.
-- PostgreSQL persistence through Spring Data JPA.
-- Java, TypeScript, and Dart clients.
-- React, Vite, and MUI management console.
-- MkDocs documentation and Marp presentation in the same repo.
+`verify` inclut les controles configures jusqu'a cette phase.
+`install` ajoute les artefacts au depot Maven local.
 
 ---
 
-<!--
-Presenter note:
+## Maven : diagnostiquer
 
-Explain the contract first.
+Dependances et configuration effective :
 
-The important design decision is that the public model is stable and intentionally different from the database entity.
--->
+```shell
+mvn dependency:tree
+mvn help:effective-pom
+mvn help:active-profiles
+```
 
-## Public Contract
+Module et profil a adapter ; derniere commande pour Spring Boot :
 
-| Field          | Rule                                          |
-| -------------- | --------------------------------------------- |
-| `id`           | Server-generated `Long`                       |
-| `code`         | Required, unique, immutable string            |
-| `label`        | Required string                               |
-| `description`  | Nullable string                               |
-| `status`       | `TODO` / `IN_PROGRESS` / `DONE` / `CANCELLED` |
-| `priority`     | `LOW` / `NORMAL` / `HIGH` / `URGENT`          |
-| Due / assignee | Nullable `YYYY-MM-DD` date / string           |
-| Taxonomy       | `tagIds: []`, nullable `nomenclatureId`       |
-| Audit          | Server-owned timestamps and actors            |
-
-Defaults: status `TODO`, priority `NORMAL`, no taxonomy assignment.
+```shell
+mvn -pl api -am verify
+mvn -Pproduction package
+mvn spring-boot:run
+```
 
 ---
 
-<!--
-Presenter note:
+## pnpm : gerer les paquets
 
-Use this example to show the actual JSON response and call out the immutable code value and timestamp semantics.
--->
+**Prerequis :** Node.js et pnpm installes.
 
-## Task
+```shell
+pnpm --version
+pnpm install
+pnpm add axios
+pnpm add -D typescript
+pnpm remove axios
+pnpm list --depth 0
+pnpm why react
+```
 
-```json
-{
-  "id": 42,
-  "code": "RELEASE-001",
-  "label": "Prepare release",
-  "description": "Review the release checklist",
-  "status": "TODO",
-  "priority": "HIGH",
-  "dueDate": "2026-11-01",
-  "assignedTo": "alice",
-  "tagIds": [],
-  "nomenclatureId": null,
-  "createdDate": "2026-08-30T17:00:00Z",
-  "lastModifiedDate": "2026-08-30T17:05:00Z",
-  "createdBy": "admin",
-  "lastModifiedBy": "alice"
+`add -D` declare une dependance de developpement.
+
+---
+
+## pnpm : scripts et workspace
+
+Scripts a definir dans `package.json` :
+
+```shell
+pnpm run dev
+pnpm run build
+pnpm run test
+```
+
+CI, paquet du workspace et execution recursive :
+
+```shell
+pnpm install --frozen-lockfile
+pnpm --filter mon-app run build
+pnpm -r run test
+pnpm exec tsc --noEmit
+```
+
+`tsc` necessite TypeScript et un `tsconfig.json` adapte.
+
+---
+
+## Storybook : initialiser
+
+Depuis un projet frontend existant, avec Node.js et pnpm :
+
+```shell
+pnpm create storybook@latest
+pnpm run storybook
+```
+
+Choisir le framework lors de l'initialisation.
+Le serveur s'ouvre habituellement sur `http://localhost:6006`.
+
+Port personnalise via le script genere :
+
+```shell
+pnpm run storybook --port 6007
+```
+
+---
+
+## Storybook : exporter
+
+Construire le catalogue statique :
+
+```shell
+pnpm run build-storybook
+pnpm exec storybook build --output-dir dist/storybook
+```
+
+La premiere commande utilise le script genere.
+La seconde est une alternative avec un dossier explicite.
+
+Previsualiser la sortie par defaut :
+
+```shell
+pnpm dlx serve storybook-static --listen 6006
+```
+
+---
+
+## .NET : creer et executer
+
+**Prerequis :** SDK .NET installe.
+
+```shell
+dotnet --info
+dotnet new list
+dotnet new webapi -n Demo.Api
+dotnet restore Demo.Api
+dotnet build Demo.Api --no-restore
+dotnet run --project Demo.Api
+```
+
+Rechargement pendant le developpement :
+
+```shell
+dotnet watch --project Demo.Api run
+```
+
+---
+
+## .NET : tester et publier
+
+Creer un projet xUnit et referencer l'API :
+
+```shell
+dotnet new xunit -n Demo.Tests
+dotnet add Demo.Tests reference Demo.Api
+dotnet test Demo.Tests
+dotnet test Demo.Tests --filter "FullyQualifiedName~UserTests"
+```
+
+Publication Release et dependances obsoletes :
+
+```shell
+dotnet publish Demo.Api -c Release -o artifacts/api
+dotnet list Demo.Api package --outdated
+```
+
+Le filtre suppose que des tests `UserTests` ont ete ajoutes.
+
+---
+
+## GitHub Actions : lancer
+
+**Prerequis :** GitHub CLI (`gh`), acces au depot et workflow existant.
+
+```shell
+gh auth login
+gh workflow list
+gh workflow view ci.yml
+gh workflow run ci.yml --ref main
+gh run list --workflow ci.yml --limit 5
+```
+
+Executer depuis le clone du depot.
+Le lancement manuel exige `workflow_dispatch` dans le workflow.
+
+---
+
+## GitHub Actions : suivre
+
+Remplacer `123456789` par un identifiant retourne par `gh run list`.
+
+```shell
+gh run watch 123456789 --exit-status
+gh run view 123456789 --log-failed
+gh run rerun 123456789 --failed
+gh run download 123456789 --dir artifacts
+```
+
+`watch --exit-status` signale un echec via le code de sortie.
+Le telechargement suppose des artefacts publies par le workflow.
+
+---
+
+## Azure DevOps : configurer
+
+**Prerequis :** Azure CLI et acces a l'organisation Azure DevOps.
+
+```shell
+az extension add --name azure-devops
+az login
+az devops configure --defaults organization=https://dev.azure.com/mon-org project=mon-projet
+az pipelines list --output table
+```
+
+Lancer une pipeline existante sur une branche :
+
+```shell
+az pipelines run --name ma-pipeline --branch main
+```
+
+---
+
+## Azure DevOps : suivre
+
+Reprendre la configuration de la slide precedente.
+Remplacer `42` par l'ID de pipeline et `1234` par l'ID d'execution.
+
+```shell
+az pipelines runs list --pipeline-ids 42 --top 5 -o table
+az pipelines runs show --id 1234 --output table
+az pipelines runs show --id 1234 --open
+az pipelines runs artifact list --run-id 1234 -o table
+az pipelines runs artifact download --run-id 1234 --artifact-name drop --path artifacts
+```
+
+`--open` ouvre le suivi et les logs dans le navigateur.
+`drop` doit correspondre a un artefact publie par la pipeline.
+
+---
+
+## MUI : installer
+
+Depuis une application React existante, avec pnpm :
+
+```shell
+pnpm add @mui/material @emotion/react @emotion/styled
+pnpm add @mui/icons-material
+```
+
+Bibliotheques optionnelles pour tableaux et dates :
+
+```shell
+pnpm add @mui/x-data-grid
+pnpm add @mui/x-date-pickers dayjs
+```
+
+Les selecteurs de date exigent un `LocalizationProvider`
+et un adaptateur tel que `AdapterDayjs`.
+
+---
+
+## MUI : composants
+
+Exemple React a placer dans un fichier `.tsx` ou `.jsx` :
+
+```jsx
+import { Button, Stack, TextField } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+
+export default function Formulaire() {
+  return (
+    <Stack component="form" spacing={2} sx={{ maxWidth: 360 }}>
+      <TextField name="nom" label="Nom" required fullWidth />
+      <Button type="submit" variant="contained" startIcon={<SaveIcon />}>
+        Enregistrer
+      </Button>
+    </Stack>
+  );
 }
 ```
 
----
-
-<!--
-Presenter note:
-
-This is the main API surface.
-
-Highlight that seed and import are operational shortcuts, while the CRUD endpoints expose the standard model lifecycle.
--->
-
-## API
-
-| Method | Path                                                               |
-| ------ | ------------------------------------------------------------------ |
-| CRUD   | `/api/v1/task[/{id}]`                                              |
-| CRUD   | `/api/v1/tag[/{id}]`                                               |
-| CRUD   | `/api/v1/nomenclature[/{id}]`                                      |
-| `POST` | `/api/v1/task/seed`                                                |
-| `POST` | `/api/v1/task/import.{json,csv}`                                   |
-| `GET`  | `/api/v1/task/export.{json,csv}`                                   |
-| PDF    | `/api/v1/task/{id}/print.pdf`, `/print.pdf`, `/print-selected.pdf` |
-
-Seed and import upsert by `code` and ignore imported IDs and dates.
-Create includes `code`; update excludes immutable `code`.
-
----
-
-## Reusable Taxonomy Domains
-
-- **Tag**: flat labels shared by tasks, such as Release or Documentation.
-- **Nomenclature**: classification tree, such as Engineering → Release.
-- Both: `id`, `code`, `label`, `description`, creation/modification dates and actors.
-- Nomenclatures add nullable `parentId`; `null` means a root.
-- References must exist; self-parenting and hierarchy cycles are rejected.
-- Referenced tags, task classifications, and parents with children cannot be deleted.
-
----
-
-<!--
-Presenter note:
-
-Reinforce the architectural boundary:
-
-public domain model vs persistence model.
-
-This keeps the API honest and prevents leaking JPA details.
--->
-
-## Model Boundary
-
-- `Task`, `Tag`, `Nomenclature`: public business objects.
-- Internal mutable JPA entities isolate persistence behavior.
-- The service maps between public and persistence models.
-- Namespace `fr.tiogars.domaintemplate` and artifact identities stay unchanged.
-
----
-
-<!--
-Presenter note:
-
-Mention the demo database setup and the known caveat that the old table is not auto-dropped, so a full volume reset is the cleanest way to start fresh.
--->
-
-## Demo Database
-
-Apply `template-java-api/src/main/resources/db/manual/task-domains.sql` before API startup on an existing database (automatic on a new Dokploy volume).
-`ddl-auto: update` is not a data migration and does not remove legacy tables.
-
-```bash
-docker compose -f docker/compose.yml -f docker/compose.local.yml down --volumes
-docker compose -f docker/compose.yml -f docker/compose.local.yml up -d postgres
-```
-
-Resetting the demo volume removes all stored data.
-Reapply the task-domain migration, then run `make docker-up`.
-
----
-
-<!--
-Presenter note:
-
-End on the operational path:
-
-start the stack, open API, console, docs, and show that the repo is designed for quick local validation.
--->
-
-## Deploy Quickly
-
-```bash
-make docker-up
-```
-
-- API: [`http://localhost:8989`](http://localhost:8989)
-- Swagger: [`http://localhost:8989/swagger-ui.html`](http://localhost:8989/swagger-ui.html)
-- Console: [`http://localhost:5173`](http://localhost:5173)
-- Docs: [`http://localhost:8000`](http://localhost:8000)
-
----
-
-<!--
-Presenter note:
-
-The container serves the interactive Bespoke deck plus the exported PDF and PPTX built at image build time.
--->
-
-## Take Away
-
-- Presentation deck: [`http://localhost:8082`](http://localhost:8082)
-- PDF: [domaintemplate.pdf](./domaintemplate.pdf)
-- PPTX: [domaintemplate.pptx](./domaintemplate.pptx)
-- Presenter mode: press `p` on the deck.
+Ajouter un gestionnaire `onSubmit` pour persister les donnees.
