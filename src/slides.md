@@ -147,14 +147,14 @@ Maven / pnpm / Storybook / .NET
 
 GitHub Actions / Azure DevOps / MUI
 
-Commandes depuis la racine du projet concerne.
-Noms de projets, workflows et identifiants a adapter.
+Commandes depuis la racine du projet concerné.
+Noms de projets, workflows et identifiants à adapter.
 
 ---
 
 ## Maven : compiler et tester
 
-**Prerequis :** JDK et Maven installes, projet avec `pom.xml`.
+**Prérequis :** JDK et Maven installés, projet avec `pom.xml`.
 
 ```shell
 mvn --version
@@ -165,14 +165,14 @@ mvn clean verify
 mvn install
 ```
 
-`verify` inclut les controles configures jusqu'a cette phase.
-`install` ajoute les artefacts au depot Maven local.
+`verify` inclut les contrôles configurés jusqu'à cette phase.
+`install` ajoute les artefacts au dépôt Maven local.
 
 ---
 
 ## Maven : diagnostiquer
 
-Dependances et configuration effective :
+Dépendances et configuration effective :
 
 ```shell
 mvn dependency:tree
@@ -180,7 +180,7 @@ mvn help:effective-pom
 mvn help:active-profiles
 ```
 
-Module et profil a adapter ; derniere commande pour Spring Boot :
+Module et profil à adapter ; dernière commande pour Spring Boot :
 
 ```shell
 mvn -pl api -am verify
@@ -190,9 +190,9 @@ mvn spring-boot:run
 
 ---
 
-## pnpm : gerer les paquets
+## pnpm : gérer les paquets
 
-**Prerequis :** Node.js et pnpm installes.
+**Prérequis :** Node.js et pnpm installés.
 
 ```shell
 pnpm --version
@@ -204,13 +204,13 @@ pnpm list --depth 0
 pnpm why react
 ```
 
-`add -D` declare une dependance de developpement.
+`add -D` déclare une dépendance de développement.
 
 ---
 
 ## pnpm : scripts et workspace
 
-Scripts a definir dans `package.json` :
+Scripts à définir dans `package.json` :
 
 ```shell
 pnpm run dev
@@ -218,7 +218,7 @@ pnpm run build
 pnpm run test
 ```
 
-CI, paquet du workspace et execution recursive :
+CI, paquet du workspace et exécution récursive :
 
 ```shell
 pnpm install --frozen-lockfile
@@ -227,7 +227,7 @@ pnpm -r run test
 pnpm exec tsc --noEmit
 ```
 
-`tsc` necessite TypeScript et un `tsconfig.json` adapte.
+`tsc` nécessite TypeScript et un `tsconfig.json` adapté.
 
 ---
 
@@ -243,7 +243,7 @@ pnpm run storybook
 Choisir le framework lors de l'initialisation.
 Le serveur s'ouvre habituellement sur `http://localhost:6006`.
 
-Port personnalise via le script genere :
+Port personnalisé via le script généré :
 
 ```shell
 pnpm run storybook --port 6007
@@ -260,10 +260,10 @@ pnpm run build-storybook
 pnpm exec storybook build --output-dir dist/storybook
 ```
 
-La premiere commande utilise le script genere.
+La première commande utilise le script généré.
 La seconde est une alternative avec un dossier explicite.
 
-Previsualiser la sortie par defaut :
+Prévisualiser la sortie par défaut :
 
 ```shell
 pnpm dlx serve storybook-static --listen 6006
@@ -271,9 +271,9 @@ pnpm dlx serve storybook-static --listen 6006
 
 ---
 
-## .NET : creer et executer
+## .NET : créer et exécuter
 
-**Prerequis :** SDK .NET installe.
+**Prérequis :** SDK .NET installé.
 
 ```shell
 dotnet --info
@@ -284,7 +284,7 @@ dotnet build Demo.Api --no-restore
 dotnet run --project Demo.Api
 ```
 
-Rechargement pendant le developpement :
+Rechargement pendant le développement :
 
 ```shell
 dotnet watch --project Demo.Api run
@@ -294,7 +294,7 @@ dotnet watch --project Demo.Api run
 
 ## .NET : tester et publier
 
-Creer un projet xUnit et referencer l'API :
+Créer un projet xUnit et référencer l'API :
 
 ```shell
 dotnet new xunit -n Demo.Tests
@@ -303,20 +303,20 @@ dotnet test Demo.Tests
 dotnet test Demo.Tests --filter "FullyQualifiedName~UserTests"
 ```
 
-Publication Release et dependances obsoletes :
+Publication Release et dépendances obsolètes :
 
 ```shell
 dotnet publish Demo.Api -c Release -o artifacts/api
 dotnet list Demo.Api package --outdated
 ```
 
-Le filtre suppose que des tests `UserTests` ont ete ajoutes.
+Le filtre suppose que des tests `UserTests` ont été ajoutés.
 
 ---
 
 ## GitHub Actions : lancer
 
-**Prerequis :** GitHub CLI (`gh`), acces au depot et workflow existant.
+**Prérequis :** GitHub CLI (`gh`), accès au dépôt et workflow existant.
 
 ```shell
 gh auth login
@@ -326,14 +326,14 @@ gh workflow run ci.yml --ref main
 gh run list --workflow ci.yml --limit 5
 ```
 
-Executer depuis le clone du depot.
+Exécuter depuis le clone du dépôt.
 Le lancement manuel exige `workflow_dispatch` dans le workflow.
 
 ---
 
 ## GitHub Actions : suivre
 
-Remplacer `123456789` par un identifiant retourne par `gh run list`.
+Remplacer `123456789` par un identifiant retourné par `gh run list`.
 
 ```shell
 gh run watch 123456789 --exit-status
@@ -342,14 +342,14 @@ gh run rerun 123456789 --failed
 gh run download 123456789 --dir artifacts
 ```
 
-`watch --exit-status` signale un echec via le code de sortie.
-Le telechargement suppose des artefacts publies par le workflow.
+`watch --exit-status` signale un échec via le code de sortie.
+Le téléchargement suppose des artefacts publiés par le workflow.
 
 ---
 
 ## Azure DevOps : configurer
 
-**Prerequis :** Azure CLI et acces a l'organisation Azure DevOps.
+**Prérequis :** Azure CLI et accès à l'organisation Azure DevOps.
 
 ```shell
 az extension add --name azure-devops
@@ -368,8 +368,8 @@ az pipelines run --name ma-pipeline --branch main
 
 ## Azure DevOps : suivre
 
-Reprendre la configuration de la slide precedente.
-Remplacer `42` par l'ID de pipeline et `1234` par l'ID d'execution.
+Reprendre la configuration de la slide précédente.
+Remplacer `42` par l'ID de pipeline et `1234` par l'ID d'exécution.
 
 ```shell
 az pipelines runs list --pipeline-ids 42 --top 5 -o table
@@ -380,7 +380,7 @@ az pipelines runs artifact download --run-id 1234 --artifact-name drop --path ar
 ```
 
 `--open` ouvre le suivi et les logs dans le navigateur.
-`drop` doit correspondre a un artefact publie par la pipeline.
+`drop` doit correspondre à un artefact publié par la pipeline.
 
 ---
 
@@ -393,21 +393,21 @@ pnpm add @mui/material @emotion/react @emotion/styled
 pnpm add @mui/icons-material
 ```
 
-Bibliotheques optionnelles pour tableaux et dates :
+Bibliothèques optionnelles pour tableaux et dates :
 
 ```shell
 pnpm add @mui/x-data-grid
 pnpm add @mui/x-date-pickers dayjs
 ```
 
-Les selecteurs de date exigent un `LocalizationProvider`
+Les sélecteurs de date exigent un `LocalizationProvider`
 et un adaptateur tel que `AdapterDayjs`.
 
 ---
 
 ## MUI : composants
 
-Exemple React a placer dans un fichier `.tsx` ou `.jsx` :
+Exemple React à placer dans un fichier `.tsx` ou `.jsx` :
 
 ```jsx
 import { Button, Stack, TextField } from '@mui/material';
@@ -425,4 +425,4 @@ export default function Formulaire() {
 }
 ```
 
-Ajouter un gestionnaire `onSubmit` pour persister les donnees.
+Ajouter un gestionnaire `onSubmit` pour persister les données.
