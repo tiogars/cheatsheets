@@ -16,8 +16,8 @@
 
       body {
         margin: 0;
-        height: 100vh;
-        height: 100dvh;
+        min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
       }
@@ -35,62 +35,186 @@
 
       strong { font-size: 16px; }
 
-      nav {
+      main {
+        flex: 1;
+        min-height: 0;
         display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 4px 16px;
+        flex-direction: column;
+        padding: 24px;
+        gap: 24px;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #58a6ff;
+        margin: 0;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #30363d;
+      }
+
+      p {
+        font-size: 16px;
+        color: #8b949e;
+        margin: 0;
+      }
+
+      .thematiques {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        width: 100%;
+      }
+
+      .thematique-card {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .thematique-card h2 {
+        font-size: 20px;
+        color: #58a6ff;
+        margin: 0;
+        font-family: 'Fira Code', Consolas, monospace;
+      }
+
+      .thematique-card p {
         font-size: 14px;
+        color: #8b949e;
+        margin: 0;
+        font-style: italic;
+      }
+
+      .thematique-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
       }
 
       a {
         display: inline-flex;
         align-items: center;
-        min-height: 36px;
+        min-height: 32px;
         color: #7ee787;
         text-decoration: none;
+        font-size: 14px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
       }
 
-      a:hover { text-decoration: underline; }
+      a:hover {
+        text-decoration: underline;
+        background-color: #21262d;
+      }
 
       a:focus-visible {
         outline: 2px solid #58a6ff;
-        outline-offset: 3px;
+        outline-offset: 2px;
       }
 
-      .deck-link { color: #58a6ff; }
+      .action-fullscreen { color: #58a6ff; }
+      .action-html { color: #7ee787; }
+      .action-pdf { color: #f85149; }
+      .action-pptx { color: #8957e5; }
 
-      main {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-      }
-
-      iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
-      }
-
-      @media (max-width: 520px) {
+      @media (max-width: 768px) {
         header { padding: 8px 12px; }
-        nav { width: 100%; gap: 4px 12px; }
+        main { padding: 16px; }
+        .thematiques { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
     <header>
       <strong>Cheatsheets</strong>
-      <nav aria-label="Documents">
-        <a class="deck-link" href="cheatsheets.html" target="_blank" rel="noopener"
-          aria-label="Ouvrir le deck seul dans un nouvel onglet">Plein écran (F11) &#8599;</a>
-        <a href="cheatsheets.html" download="cheatsheets.html" aria-label="Télécharger le deck HTML">HTML</a>
-        <a href="cheatsheets.pdf" download aria-label="Télécharger le PDF">PDF</a>
-        <a href="cheatsheets.pptx" download aria-label="Télécharger le PowerPoint">PowerPoint</a>
-      </nav>
     </header>
     <main>
-      <iframe src="cheatsheets.html" title="Présentation Marp : Cheatsheets" allow="fullscreen" allowfullscreen></iframe>
+      <h1>Thématiques</h1>
+      <p>Sélectionnez une thématique pour accéder aux slides.</p>
+      
+      <div class="thematiques">
+        <article class="thematique-card">
+          <h2>Maven</h2>
+          <p>Compiler, tester et diagnostiquer</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="maven.html" target="_blank" rel="noopener" aria-label="Maven - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="maven.html" download="maven.html" aria-label="Télécharger Maven HTML">HTML</a>
+            <a class="action-pdf" href="maven.pdf" download aria-label="Télécharger Maven PDF">PDF</a>
+            <a class="action-pptx" href="maven.pptx" download aria-label="Télécharger Maven PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>pnpm</h2>
+          <p>Gestion des paquets Node.js</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="pnpm.html" target="_blank" rel="noopener" aria-label="pnpm - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="pnpm.html" download="pnpm.html" aria-label="Télécharger pnpm HTML">HTML</a>
+            <a class="action-pdf" href="pnpm.pdf" download aria-label="Télécharger pnpm PDF">PDF</a>
+            <a class="action-pptx" href="pnpm.pptx" download aria-label="Télécharger pnpm PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>Storybook</h2>
+          <p>Documentation des composants UI</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="storybook.html" target="_blank" rel="noopener" aria-label="Storybook - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="storybook.html" download="storybook.html" aria-label="Télécharger Storybook HTML">HTML</a>
+            <a class="action-pdf" href="storybook.pdf" download aria-label="Télécharger Storybook PDF">PDF</a>
+            <a class="action-pptx" href="storybook.pptx" download aria-label="Télécharger Storybook PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>.NET</h2>
+          <p>Création, exécution, test et publication</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="dotnet.html" target="_blank" rel="noopener" aria-label=".NET - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="dotnet.html" download="dotnet.html" aria-label="Télécharger .NET HTML">HTML</a>
+            <a class="action-pdf" href="dotnet.pdf" download aria-label="Télécharger .NET PDF">PDF</a>
+            <a class="action-pptx" href="dotnet.pptx" download aria-label="Télécharger .NET PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>GitHub Actions</h2>
+          <p>Lancer et suivre les workflows CI/CD</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="github-actions.html" target="_blank" rel="noopener" aria-label="GitHub Actions - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="github-actions.html" download="github-actions.html" aria-label="Télécharger GitHub Actions HTML">HTML</a>
+            <a class="action-pdf" href="github-actions.pdf" download aria-label="Télécharger GitHub Actions PDF">PDF</a>
+            <a class="action-pptx" href="github-actions.pptx" download aria-label="Télécharger GitHub Actions PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>Azure DevOps</h2>
+          <p>Configurer et suivre les pipelines</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="azure-devops.html" target="_blank" rel="noopener" aria-label="Azure DevOps - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="azure-devops.html" download="azure-devops.html" aria-label="Télécharger Azure DevOps HTML">HTML</a>
+            <a class="action-pdf" href="azure-devops.pdf" download aria-label="Télécharger Azure DevOps PDF">PDF</a>
+            <a class="action-pptx" href="azure-devops.pptx" download aria-label="Télécharger Azure DevOps PowerPoint">PPTX</a>
+          </div>
+        </article>
+
+        <article class="thematique-card">
+          <h2>MUI</h2>
+          <p>Installation et composants Material-UI</p>
+          <div class="thematique-actions">
+            <a class="action-fullscreen" href="mui.html" target="_blank" rel="noopener" aria-label="MUI - Plein écran">Plein écran &#8599;</a>
+            <a class="action-html" href="mui.html" download="mui.html" aria-label="Télécharger MUI HTML">HTML</a>
+            <a class="action-pdf" href="mui.pdf" download aria-label="Télécharger MUI PDF">PDF</a>
+            <a class="action-pptx" href="mui.pptx" download aria-label="Télécharger MUI PowerPoint">PPTX</a>
+          </div>
+        </article>
+      </div>
     </main>
   </body>
 </html>
