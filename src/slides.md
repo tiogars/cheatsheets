@@ -143,12 +143,94 @@ strong {
 
 # Cheatsheets
 
-Maven / pnpm / Vitest / Storybook / Marp
+Git / Maven / pnpm / Vite / Vitest / Storybook / Marp / MkDocs / Mermaid
 
-.NET / Flutter / Python / Spring / GitHub Actions / Azure DevOps / MUI
+.NET / Flutter / Python / Spring
 
-Commandes depuis la racine du projet concerné.
+Docker / Snowflake / GitHub Actions / Azure DevOps / MUI
+
+Commandes depuis la racine du projet concerné, sauf indication contraire.
 Noms de projets, workflows et identifiants à adapter.
+
+---
+
+## Git : examiner un dépôt
+
+Site de référence : [Git](https://git-scm.com/)
+Documentation : [Documentation Git](https://git-scm.com/docs)
+
+**Prérequis :** Git 2.23+, dépôt local existant et identité de commit configurée.
+
+```shell
+git --version
+git status --short
+git --no-pager diff
+git --no-pager log --oneline -5
+```
+
+`status` inclut les fichiers non suivis ; `diff` montre les modifications
+non indexées des fichiers suivis.
+
+---
+
+## Git : créer une branche et valider
+
+Depuis la branche de départ choisie, avec `README.md` modifié :
+
+```shell
+git switch -c feature/ma-fonctionnalite
+git add README.md
+git --no-pager diff --cached
+git commit -m "Décrire la modification"
+```
+
+`add` prépare le contenu du prochain commit.
+Vérifier `diff --cached` avant de valider.
+
+Adapter le nom de la branche, le fichier et le message de commit.
+
+---
+
+## Git : synchroniser
+
+**Prérequis :** dépôt distant `origin` configuré et accessible.
+Publier la branche et définir son suivi :
+
+```shell
+git remote -v
+git push -u origin feature/ma-fonctionnalite
+```
+
+Ensuite, sur cette branche et avec un arbre de travail propre :
+
+```shell
+git pull --ff-only
+git push
+```
+
+`--ff-only` refuse une mise à jour si les historiques ont divergé :
+analyser la situation plutôt que forcer le push.
+
+---
+
+## Git : préserver les modifications
+
+Retirer un fichier de l'index sans modifier son contenu :
+
+```shell
+git restore --staged README.md
+```
+
+Mettre des modifications en cours de côté, puis les réappliquer :
+
+```shell
+git stash push -u -m "Travail en cours"
+git stash list
+git stash apply "stash@{0}"
+```
+
+`-u` inclut les fichiers non suivis, mais pas les fichiers ignorés.
+`apply` conserve le stash ; résoudre les conflits avant de continuer.
 
 ---
 
@@ -235,6 +317,77 @@ pnpm exec tsc --noEmit
 ```
 
 `tsc` nécessite TypeScript et un `tsconfig.json` adapté.
+
+---
+
+## Vite : créer un projet
+
+Site : [Vite](https://vite.dev/)
+Guide : [Getting Started | Vite](https://vite.dev/guide/)
+
+**Prérequis :** Node.js 20.19+ ou 22.12+, et pnpm installés.
+
+Créer une application React avec TypeScript :
+
+```shell
+pnpm create vite mon-app --template react-ts
+cd mon-app
+pnpm install
+```
+
+Le guide officiel propose aussi des modèles JavaScript, Vue, Svelte et d’autres frameworks.
+
+---
+
+## Vite : développer
+
+Depuis la racine du projet :
+
+```shell
+pnpm run dev
+pnpm run dev -- --open
+```
+
+Le serveur démarre par défaut sur `http://localhost:5173`.
+
+Vite recharge les modules modifiés pendant le développement. Arrêter le serveur avec `Ctrl+C`.
+
+---
+
+## Vite : compiler
+
+Créer les fichiers optimisés pour la production :
+
+```shell
+pnpm run build
+```
+
+Vérifier localement le résultat généré dans `dist/` :
+
+```shell
+pnpm run preview
+```
+
+`preview` sert à contrôler le build localement ; ce n’est pas un serveur de production.
+
+---
+
+## Vite : configurer
+
+Fichier `.env.local` :
+
+```dotenv
+VITE_API_URL=https://api.example.test
+```
+
+Lire la variable dans le code client :
+
+```js
+const apiUrl = import.meta.env.VITE_API_URL;
+```
+
+Toute variable `VITE_` est intégrée au code livré au navigateur : n’y placer aucun secret.
+Le fichier `.env.local` est destiné aux réglages locaux et doit rester ignoré par Git.
 
 ---
 
@@ -622,6 +775,165 @@ remplacer `mvn` par `.\mvnw.cmd` sous Windows ou `./mvnw` sous macOS/Linux.
 
 ---
 
+## Docker : démarrer
+
+Site de référence : [Docker](https://www.docker.com/)
+Documentation : [Documentation Docker](https://docs.docker.com/)
+
+**Prérequis :** Docker installé, moteur démarré et conteneurs Linux activés.
+
+```shell
+docker version
+docker pull nginx:alpine
+docker run --name demo-web -d -p 127.0.0.1:8080:80 nginx:alpine
+```
+
+Le site est accessible sur `http://localhost:8080`, uniquement depuis l'hôte.
+Adapter le nom du conteneur et le port s'ils sont déjà utilisés.
+
+---
+
+## Docker : suivre un conteneur
+
+Lister les conteneurs, lire les journaux et ouvrir un shell :
+
+```shell
+docker ps -a
+docker logs --tail 50 demo-web
+docker exec -it demo-web sh
+```
+
+Quitter le shell avec `exit`, puis arrêter ou relancer le conteneur :
+
+```shell
+docker stop demo-web
+docker start demo-web
+```
+
+`stop` et `start` réutilisent le même conteneur sans le supprimer.
+
+---
+
+## Docker : construire une image
+
+**Prérequis :** `Dockerfile` existant à la racine du projet ;
+application écoutant sur `0.0.0.0:8080` dans le conteneur.
+
+```shell
+docker build -t mon-app:dev .
+docker image ls
+docker run --rm -p 127.0.0.1:8081:8080 mon-app:dev
+```
+
+`--rm` supprime le conteneur à son arrêt.
+Conserver les données persistantes dans un volume.
+
+Utiliser `.dockerignore` pour exclure les fichiers inutiles et les secrets
+du contexte de construction.
+
+---
+
+## Docker : utiliser Compose
+
+**Prérequis :** Docker Compose installé et fichier `compose.yaml` existant.
+Exécuter les commandes depuis le dossier contenant ce fichier :
+
+```shell
+docker compose config --quiet
+docker compose up -d --build
+docker compose ps
+docker compose logs --tail 50
+docker compose down
+```
+
+**Attention :** `down` supprime les conteneurs et réseaux du projet.
+Les volumes nommés sont conservés, mais pas les données stockées uniquement
+dans les conteneurs.
+
+---
+
+## Snowflake : choisir le contexte
+
+Site de référence : [Snowflake](https://www.snowflake.com/)
+Documentation : [Documentation Snowflake](https://docs.snowflake.com/)
+
+**Prérequis :** compte Snowflake, accès SQL via Snowsight et objets de test autorisés.
+
+```sql
+USE ROLE MON_ROLE;
+USE WAREHOUSE MON_WH;
+USE DATABASE MON_DB;
+USE SCHEMA MON_SCHEMA;
+SELECT CURRENT_ROLE(), CURRENT_WAREHOUSE(), CURRENT_DATABASE(), CURRENT_SCHEMA();
+```
+
+Adapter `MON_ROLE`, `MON_WH`, `MON_DB` et `MON_SCHEMA`
+à des rôles et objets existants.
+
+---
+
+## Snowflake : explorer les données
+
+Lister les objets visibles par le rôle actif :
+
+```sql
+SHOW DATABASES;
+SHOW SCHEMAS IN DATABASE MON_DB;
+SHOW TABLES IN SCHEMA MON_DB.MON_SCHEMA;
+DESCRIBE TABLE MON_DB.MON_SCHEMA.MA_TABLE;
+```
+
+Lire un extrait d'une table existante :
+
+```sql
+SELECT * FROM MON_DB.MON_SCHEMA.MA_TABLE LIMIT 10;
+```
+
+Adapter `MA_TABLE` et vérifier les droits de lecture sur cette table.
+
+---
+
+## Snowflake : charger un CSV
+
+**Prérequis :** `clients.csv` (en-tête `ID,NOM`) déposé dans le stage `MON_STAGE`,
+avec les droits de lecture du stage et d'accès au schéma.
+
+```sql
+CREATE TEMP TABLE TMP_CLIENTS_DEMO (ID NUMBER, NOM VARCHAR);
+COPY INTO TMP_CLIENTS_DEMO FROM @MON_STAGE
+FILES = ('clients.csv')
+FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1
+               FIELD_OPTIONALLY_ENCLOSED_BY = '"')
+ON_ERROR = 'ABORT_STATEMENT';
+SELECT * FROM TMP_CLIENTS_DEMO LIMIT 10;
+```
+
+La table temporaire est limitée à la session courante.
+Une erreur de chargement interrompt l'instruction `COPY INTO`.
+
+---
+
+## Snowflake : suivre le calcul
+
+Consulter les dernières requêtes de la session (durées en millisecondes) :
+
+```sql
+SELECT QUERY_ID, EXECUTION_STATUS, TOTAL_ELAPSED_TIME
+FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY_BY_SESSION(RESULT_LIMIT => 5))
+ORDER BY START_TIME DESC;
+```
+
+Sur un entrepôt de test, avec le droit `MODIFY` :
+
+```sql
+ALTER WAREHOUSE MON_WH SET AUTO_SUSPEND = 60 AUTO_RESUME = TRUE;
+```
+
+Auto-suspension après inactivité (seuil de 60 secondes), reprise au besoin.
+Un entrepôt démarré consomme des crédits, même sans requête en cours.
+
+---
+
 ## GitHub Actions : lancer
 
 **Version de référence (11 novembre 2026) :** GitHub CLI (`gh`) 2.103.3.
@@ -812,3 +1124,144 @@ make build
 
 Thèmes intégrés : `default`, `gaia` et `uncover`.
 `<!-- _class: lead -->` applique une classe à la diapositive courante.
+
+---
+
+## MkDocs : installer
+
+Site : [MkDocs](https://www.mkdocs.org/)
+Guide : [Getting Started with MkDocs](https://www.mkdocs.org/getting-started/)
+
+**Version de référence (11 novembre 2026) :** MkDocs 1.6.1.
+MkDocs nécessite Python 3.8 ou supérieur.
+
+**Prérequis :** environnement virtuel Python activé (voir la fiche Python).
+
+```shell
+python -m pip install mkdocs
+mkdocs --version
+mkdocs --help
+```
+
+Sous Windows, utiliser `python -m mkdocs` si la commande `mkdocs` est introuvable.
+
+---
+
+## MkDocs : créer et prévisualiser
+
+Créer un projet, puis lancer le serveur de développement :
+
+```shell
+mkdocs new mon-site
+cd mon-site
+mkdocs serve
+```
+
+`mkdocs new` crée la configuration `mkdocs.yml` et la page `docs/index.md`.
+
+Le site est servi sur `http://127.0.0.1:8000/` et se recharge à chaque modification
+de `docs/` ou de `mkdocs.yml`. Arrêter le serveur avec `Ctrl+C`.
+
+---
+
+## MkDocs : configurer
+
+Fichier `mkdocs.yml` à la racine du projet :
+
+```yaml
+site_name: Mon projet
+nav:
+  - Accueil: index.md
+  - À propos: about.md
+theme: readthedocs
+```
+
+`site_name` est la seule option obligatoire.
+Les pages listées dans `nav` doivent exister dans `docs/` : créer `docs/about.md` avant de l'ajouter.
+Thèmes intégrés : `mkdocs` (par défaut) et `readthedocs`.
+
+---
+
+## MkDocs : générer et publier
+
+Générer le site statique dans `site/`, en échouant au moindre avertissement :
+
+```shell
+mkdocs build --strict
+```
+
+Ajouter `site/` au `.gitignore` : ce dossier est régénéré à chaque build.
+
+Publier sur GitHub Pages, dans la branche `gh-pages` du distant `origin` :
+
+```shell
+mkdocs gh-deploy
+```
+
+`gh-deploy` publie sans relecture et inclut les fichiers non suivis ou non validés :
+vérifier le site avant, et ne jamais modifier la branche `gh-pages` à la main.
+
+---
+
+## Mermaid : écrire un diagramme
+
+Site : [Mermaid](https://mermaid.js.org/)
+Syntaxe : [Flowcharts](https://mermaid.js.org/syntax/flowchart.html)
+
+Déclarer le type et l'orientation, puis relier les nœuds :
+
+```mermaid
+flowchart LR
+    A[Utilisateur] --> B{Authentifié ?}
+    B -->|Oui| C[Tableau de bord]
+    B -->|Non| D[Connexion]
+```
+
+`LR` oriente le flux de gauche à droite ; `TD` le fait descendre.
+Les identifiants désignent les nœuds ; les libellés entre crochets s'affichent.
+Dans un flowchart, éviter le mot `end` en minuscules : il peut casser le diagramme.
+
+---
+
+## Mermaid : choisir un type
+
+- **Flowchart** : étapes, décisions et enchaînements.
+- **Sequence** : échanges ordonnés entre acteurs ou services.
+- **Class** et **ER** : structures de classes et relations entre entités.
+- **State** : états et transitions d'un système.
+- **Gantt** : tâches et calendrier d'un projet.
+- **Mindmap**, **Timeline**, **Pie** et **Git graph** : idées, événements,
+  proportions et historique de branches.
+
+Chaque type a sa propre syntaxe : consulter la
+[référence des diagrammes](https://mermaid.js.org/intro/syntax-reference.html).
+
+---
+
+## Mermaid : intégrer dans Markdown
+
+Dans les plateformes compatibles, utiliser un bloc de code `mermaid` :
+
+````markdown
+```mermaid
+sequenceDiagram
+    Client->>API: Requête
+    API-->>Client: Réponse
+```
+````
+
+GitHub et GitLab rendent ces blocs. Le rendu dépend toutefois de la plateforme
+et de sa configuration : vérifier le résultat dans l'outil cible.
+
+---
+
+## Mermaid : prévisualiser et exporter
+
+Ouvrir l'[éditeur Mermaid Live](https://mermaid.live/) pour saisir le code et
+contrôler le rendu au fil des modifications.
+
+Depuis l'éditeur, exporter le diagramme en PNG, SVG ou Markdown. Conserver le
+code source pour pouvoir le modifier et le suivre avec Git.
+
+En cas d'erreur, vérifier le mot-clé du diagramme, les identifiants de nœuds et
+les caractères réservés dans les libellés.
