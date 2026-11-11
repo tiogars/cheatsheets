@@ -149,6 +149,8 @@ Commandes depuis la racine du projet concerné.
 
 ## Maven : compiler et tester
 
+**Versions de référence (11 novembre 2026) :** JDK 25.0.5 (LTS) et Apache Maven 3.10.0.
+
 **Prérequis :** JDK et Maven installés, projet avec `pom.xml`.
 
 ```shell

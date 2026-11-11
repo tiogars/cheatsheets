@@ -143,9 +143,9 @@ strong {
 
 # Cheatsheets
 
-Maven / pnpm / Storybook / .NET
+Maven / pnpm / Vitest / Storybook / Marp
 
-GitHub Actions / Azure DevOps / MUI
+.NET / GitHub Actions / Azure DevOps / MUI
 
 Commandes depuis la racine du projet concerné.
 Noms de projets, workflows et identifiants à adapter.
@@ -153,6 +153,8 @@ Noms de projets, workflows et identifiants à adapter.
 ---
 
 ## Maven : compiler et tester
+
+**Versions de référence (11 novembre 2026) :** JDK 25.0.5 (LTS) et Apache Maven 3.10.0.
 
 **Prérequis :** JDK et Maven installés, projet avec `pom.xml`.
 
@@ -192,8 +194,12 @@ mvn spring-boot:run
 
 ## pnpm : gérer les paquets
 
+**Versions de référence (11 novembre 2026) :** Node.js 26.13.0 (LTS) et pnpm 12.18.0.
+
 **Prérequis :** Node.js et pnpm installés.
 Documentation : [Fast, disk space efficient package manager | pnpm](https://pnpm.io/fr)
+Exemples de paquets : Axios 1.21.1 et TypeScript 7.0.2.
+Pourquoi pnpm : [Motivation | pnpm](https://pnpm.io/fr/motivation)
 
 ```shell
 pnpm --version
@@ -232,8 +238,85 @@ pnpm exec tsc --noEmit
 
 ---
 
+## Vitest : installer
+
+Site : [Vitest | Next Generation testing framework](https://vitest.dev/)
+Guide : [Getting Started | Guide | Vitest](https://vitest.dev/guide/)
+
+**Versions de référence (11 novembre 2026) :** Vitest et `@vitest/coverage-v8` 5.1.0, Node.js 26.13.0 (LTS).
+Vitest nécessite Node.js 22.12.0 ou supérieur et Vite 6.4.0 ou supérieur.
+
+Installer Vitest comme dépendance de développement :
+
+```shell
+pnpm add -D vitest
+```
+
+Ajouter le script de test à `package.json` :
+
+```json
+{
+  "scripts": {
+    "test": "vitest"
+  }
+}
+```
+
+---
+
+## Vitest : écrire un test
+
+Fonction à tester dans `src/sum.js` :
+
+```js
+export function sum(a, b) {
+  return a + b;
+}
+```
+
+Test dans `src/sum.test.js` :
+
+```js
+import { expect, test } from "vitest";
+import { sum } from "./sum.js";
+
+test("additionne deux nombres", () => {
+  expect(sum(1, 2)).toBe(3);
+});
+```
+
+---
+
+## Vitest : lancer les tests
+
+Depuis la racine du projet :
+
+```shell
+pnpm exec vitest run
+pnpm exec vitest
+pnpm exec vitest run src/sum.test.js
+pnpm run test
+node --run test
+```
+
+`vitest run` lance les tests une seule fois ; `vitest` les relance à chaque modification.
+`node --run test` exécute le script `test` de `package.json` avec Node.js 22.13.0 ou supérieur.
+
+Couverture de code avec le fournisseur V8 :
+
+```shell
+pnpm add -D @vitest/coverage-v8
+pnpm exec vitest run --coverage
+```
+
+Garder `@vitest/coverage-v8` sur la même version majeure que Vitest.
+
+---
+
 ## Storybook : initialiser
 
+Documentation : [Storybook: Frontend workshop for UI development](https://storybook.js.org/)
+**Versions de référence (11 novembre 2026) :** Storybook 10.6.7, Node.js 26.13.0 (LTS) et pnpm 12.18.0.
 Depuis un projet frontend existant, avec Node.js et pnpm :
 
 ```shell
@@ -273,6 +356,8 @@ pnpm dlx serve storybook-static --listen 6006
 ---
 
 ## .NET : créer et exécuter
+
+**Versions de référence (11 novembre 2026) :** SDK .NET 11.0.100 (STS) et 10.0.404 (LTS).
 
 **Prérequis :** SDK .NET installé.
 
@@ -317,6 +402,8 @@ Le filtre suppose que des tests `UserTests` ont été ajoutés.
 
 ## GitHub Actions : lancer
 
+**Version de référence (11 novembre 2026) :** GitHub CLI (`gh`) 2.103.3.
+
 **Prérequis :** GitHub CLI (`gh`), accès au dépôt et workflow existant.
 
 ```shell
@@ -349,6 +436,8 @@ Le téléchargement suppose des artefacts publiés par le workflow.
 ---
 
 ## Azure DevOps : configurer
+
+**Versions de référence (11 novembre 2026) :** Azure CLI 2.92.0, extension Azure DevOps 1.0.10.
 
 **Prérequis :** Azure CLI et accès à l'organisation Azure DevOps.
 
@@ -387,6 +476,9 @@ az pipelines runs artifact download --run-id 1234 --artifact-name drop --path ar
 
 ## MUI : installer
 
+**Versions de référence (11 novembre 2026) :** Node.js 26.13.0 (LTS), pnpm 12.18.0, React 19.3.1, `@mui/material` et `@mui/icons-material` 9.5.0, MUI X 9.17.0.
+Dépendances de l'exemple : Emotion (`@emotion/react` 11.14.0, `@emotion/styled` 11.14.1) et Day.js 1.11.23.
+
 Depuis une application React existante, avec pnpm :
 
 ```shell
@@ -411,8 +503,8 @@ et un adaptateur tel que `AdapterDayjs`.
 Exemple React à placer dans un fichier `.tsx` ou `.jsx` :
 
 ```jsx
-import { Button, Stack, TextField } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
+import { Button, Stack, TextField } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 
 export default function Formulaire() {
   return (
@@ -427,3 +519,74 @@ export default function Formulaire() {
 ```
 
 Ajouter un gestionnaire `onSubmit` pour persister les données.
+
+---
+
+## Marp : écrire des diapositives
+
+Site : [Marp | The Markdown Presentation Ecosystem](https://marp.app/)
+CLI : [marp-team/marp-cli](https://github.com/marp-team/marp-cli)
+Directives : [Marpit Directives](https://marpit.marp.app/directives)
+
+**Version de référence (11 novembre 2026) :** Marp CLI 4.5.1 et Node.js 26.13.0 (LTS).
+Marp CLI nécessite Node.js 18 ou supérieur.
+
+En-tête YAML et séparation des diapositives :
+
+```markdown
+---
+marp: true
+theme: default
+paginate: true
+---
+
+# Titre
+
+---
+
+## Diapositive suivante
+```
+
+---
+
+## Marp : exporter
+
+Installer le CLI dans le projet :
+
+```shell
+pnpm add -D @marp-team/marp-cli
+```
+
+Exporter en HTML, PDF et PowerPoint :
+
+```shell
+pnpm exec marp src/presentation.md --html --output dist/presentation.html
+pnpm exec marp src/presentation.md --html --pdf --pdf-outlines --output dist/presentation.pdf
+pnpm exec marp src/presentation.md --html --pptx --output dist/presentation.pptx
+pnpm exec marp src/presentation.md --html --images png --output dist/presentation.png
+```
+
+L'export PDF, PPTX et images nécessite Chrome, Edge ou Firefox.
+
+---
+
+## Marp : prévisualiser
+
+Prévisualiser un dossier ou surveiller une source :
+
+```shell
+pnpm exec marp --server src
+pnpm exec marp --watch src/presentation.md
+```
+
+Dans ce dépôt :
+
+```shell
+pnpm run dev
+make build
+```
+
+`make build` génère les exports HTML, PDF et PPTX des thématiques.
+
+Thèmes intégrés : `default`, `gaia` et `uncover`.
+`<!-- _class: lead -->` applique une classe à la diapositive courante.

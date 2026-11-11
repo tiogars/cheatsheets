@@ -149,8 +149,12 @@ Commandes depuis la racine du projet concerné.
 
 ## pnpm : gérer les paquets
 
+**Versions de référence (11 novembre 2026) :** Node.js 26.13.0 (LTS) et pnpm 12.18.0.
 **Prérequis :** Node.js et pnpm installés.
 Documentation : [Fast, disk space efficient package manager | pnpm](https://pnpm.io/fr)
+Pourquoi pnpm : [Motivation | pnpm](https://pnpm.io/fr/motivation)
+
+Exemples de paquets : Axios 1.21.1 et TypeScript 7.0.2.
 
 ```shell
 pnpm --version

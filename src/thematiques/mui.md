@@ -149,6 +149,9 @@ Commandes depuis la racine du projet concerné.
 
 ## MUI : installer
 
+**Versions de référence (11 novembre 2026) :** Node.js 26.13.0 (LTS), pnpm 12.18.0, React 19.3.1, `@mui/material` et `@mui/icons-material` 9.5.0, MUI X 9.17.0.
+Dépendances de l'exemple : Emotion (`@emotion/react` 11.14.0, `@emotion/styled` 11.14.1) et Day.js 1.11.23.
+
 Depuis une application React existante, avec pnpm :
 
 ```shell
@@ -173,8 +176,8 @@ et un adaptateur tel que `AdapterDayjs`.
 Exemple React à placer dans un fichier `.tsx` ou `.jsx` :
 
 ```jsx
-import { Button, Stack, TextField } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
+import { Button, Stack, TextField } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 
 export default function Formulaire() {
   return (

@@ -150,6 +150,8 @@ Noms d'organisation, de projet, de pipeline et identifiants à adapter.
 
 ## Azure DevOps : configurer
 
+**Versions de référence (11 novembre 2026) :** Azure CLI 2.92.0, extension Azure DevOps 1.0.10.
+
 **Prérequis :** Azure CLI et accès à l'organisation Azure DevOps.
 
 ```shell

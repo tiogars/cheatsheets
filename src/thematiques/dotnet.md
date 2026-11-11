@@ -149,6 +149,8 @@ Commandes depuis la racine du projet concerné.
 
 ## .NET : créer et exécuter
 
+**Versions de référence (11 novembre 2026) :** SDK .NET 11.0.100 (STS) et 10.0.404 (LTS).
+
 **Prérequis :** SDK .NET installé.
 
 ```shell

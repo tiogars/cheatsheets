@@ -149,6 +149,8 @@ Commandes depuis la racine du projet concerné.
 
 ## Storybook : initialiser
 
+Documentation : [Storybook: Frontend workshop for UI development](https://storybook.js.org/)
+**Versions de référence (11 novembre 2026) :** Storybook 10.6.7, Node.js 26.13.0 (LTS) et pnpm 12.18.0.
 Depuis un projet frontend existant, avec Node.js et pnpm :
 
 ```shell

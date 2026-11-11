@@ -150,6 +150,8 @@ Noms de workflows et identifiants à adapter.
 
 ## GitHub Actions : lancer
 
+**Version de référence (11 novembre 2026) :** GitHub CLI (`gh`) 2.103.3.
+
 **Prérequis :** GitHub CLI (`gh`), accès au dépôt et workflow existant.
 
 ```shell
