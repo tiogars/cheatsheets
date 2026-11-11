@@ -150,6 +150,7 @@ Commandes depuis la racine du projet concerné.
 ## pnpm : gérer les paquets
 
 **Prérequis :** Node.js et pnpm installés.
+Documentation : [Fast, disk space efficient package manager | pnpm](https://pnpm.io/fr)
 
 ```shell
 pnpm --version
