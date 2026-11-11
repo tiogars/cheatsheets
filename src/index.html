@@ -58,6 +58,18 @@
         margin: 0;
       }
 
+      .thematique-category {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .thematique-category > h2 {
+        font-size: 22px;
+        margin: 0;
+        text-wrap: balance;
+      }
+
       .thematiques {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -75,7 +87,7 @@
         gap: 12px;
       }
 
-      .thematique-card h2 {
+      .thematique-card h3 {
         font-size: 20px;
         color: #58a6ff;
         margin: 0;
@@ -135,119 +147,153 @@
     </header>
     <main>
       <h1>Thématiques</h1>
-      <p>Sélectionnez une thématique pour accéder aux slides.</p>
-      
-      <div class="thematiques">
-        <article class="thematique-card">
-          <h2>Maven</h2>
-          <p>Compiler, tester et diagnostiquer</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="maven.html" target="_blank" rel="noopener" aria-label="Maven - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="maven.html" download="maven.html" aria-label="Télécharger Maven HTML">HTML</a>
-            <a class="action-pdf" href="maven.pdf" download aria-label="Télécharger Maven PDF">PDF</a>
-            <a class="action-pptx" href="maven.pptx" download aria-label="Télécharger Maven PowerPoint">PPTX</a>
-          </div>
-        </article>
+      <p>Parcourez les catégories pour accéder aux présentations et aux téléchargements.</p>
 
-        <article class="thematique-card">
-          <h2>pnpm</h2>
-          <p>Gestion des paquets Node.js</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="pnpm.html" target="_blank" rel="noopener" aria-label="pnpm - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="pnpm.html" download="pnpm.html" aria-label="Télécharger pnpm HTML">HTML</a>
-            <a class="action-pdf" href="pnpm.pdf" download aria-label="Télécharger pnpm PDF">PDF</a>
-            <a class="action-pptx" href="pnpm.pptx" download aria-label="Télécharger pnpm PowerPoint">PPTX</a>
-          </div>
-        </article>
+      <section class="thematique-category" aria-labelledby="langages-frameworks">
+        <h2 id="langages-frameworks">Langages et frameworks</h2>
+        <div class="thematiques">
+          <article class="thematique-card">
+            <h3>.NET</h3>
+            <p>Création, exécution, test et publication</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="dotnet.html" target="_blank" rel="noopener" aria-label=".NET - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="dotnet.html" download="dotnet.html" aria-label="Télécharger .NET HTML">HTML</a>
+              <a class="action-pdf" href="dotnet.pdf" download aria-label="Télécharger .NET PDF">PDF</a>
+              <a class="action-pptx" href="dotnet.pptx" download aria-label="Télécharger .NET PowerPoint">PPTX</a>
+            </div>
+          </article>
 
-        <article class="thematique-card">
-          <h2>Vitest</h2>
-          <p>Tests JavaScript et TypeScript</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="vitest.html" target="_blank" rel="noopener" aria-label="Vitest - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="vitest.html" download="vitest.html" aria-label="Télécharger Vitest HTML">HTML</a>
-            <a class="action-pdf" href="vitest.pdf" download aria-label="Télécharger Vitest PDF">PDF</a>
-            <a class="action-pptx" href="vitest.pptx" download aria-label="Télécharger Vitest PowerPoint">PPTX</a>
-          </div>
-        </article>
+          <article class="thematique-card">
+            <h3>Python</h3>
+            <p>Scripts, environnements virtuels et tests</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="python.html" target="_blank" rel="noopener" aria-label="Python - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="python.html" download="python.html" aria-label="Télécharger Python HTML">HTML</a>
+              <a class="action-pdf" href="python.pdf" download aria-label="Télécharger Python PDF">PDF</a>
+              <a class="action-pptx" href="python.pptx" download aria-label="Télécharger Python PowerPoint">PPTX</a>
+            </div>
+          </article>
 
-        <article class="thematique-card">
-          <h2>Storybook</h2>
-          <p>Documentation des composants UI</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="storybook.html" target="_blank" rel="noopener" aria-label="Storybook - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="storybook.html" download="storybook.html" aria-label="Télécharger Storybook HTML">HTML</a>
-            <a class="action-pdf" href="storybook.pdf" download aria-label="Télécharger Storybook PDF">PDF</a>
-            <a class="action-pptx" href="storybook.pptx" download aria-label="Télécharger Storybook PowerPoint">PPTX</a>
-          </div>
-        </article>
+          <article class="thematique-card">
+            <h3>Spring</h3>
+            <p>Démarrage, configuration et tests avec Spring Boot</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="spring.html" target="_blank" rel="noopener" aria-label="Spring - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="spring.html" download="spring.html" aria-label="Télécharger Spring HTML">HTML</a>
+              <a class="action-pdf" href="spring.pdf" download aria-label="Télécharger Spring PDF">PDF</a>
+              <a class="action-pptx" href="spring.pptx" download aria-label="Télécharger Spring PowerPoint">PPTX</a>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <article class="thematique-card">
-          <h2>.NET</h2>
-          <p>Création, exécution, test et publication</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="dotnet.html" target="_blank" rel="noopener" aria-label=".NET - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="dotnet.html" download="dotnet.html" aria-label="Télécharger .NET HTML">HTML</a>
-            <a class="action-pdf" href="dotnet.pdf" download aria-label="Télécharger .NET PDF">PDF</a>
-            <a class="action-pptx" href="dotnet.pptx" download aria-label="Télécharger .NET PowerPoint">PPTX</a>
-          </div>
-        </article>
+      <section class="thematique-category" aria-labelledby="outils-developpement">
+        <h2 id="outils-developpement">Outils de développement</h2>
+        <div class="thematiques">
+          <article class="thematique-card">
+            <h3>Maven</h3>
+            <p>Compiler, tester et diagnostiquer</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="maven.html" target="_blank" rel="noopener" aria-label="Maven - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="maven.html" download="maven.html" aria-label="Télécharger Maven HTML">HTML</a>
+              <a class="action-pdf" href="maven.pdf" download aria-label="Télécharger Maven PDF">PDF</a>
+              <a class="action-pptx" href="maven.pptx" download aria-label="Télécharger Maven PowerPoint">PPTX</a>
+            </div>
+          </article>
 
-        <article class="thematique-card">
-          <h2>Python</h2>
-          <p>Scripts, environnements virtuels et tests</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="python.html" target="_blank" rel="noopener" aria-label="Python - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="python.html" download="python.html" aria-label="Télécharger Python HTML">HTML</a>
-            <a class="action-pdf" href="python.pdf" download aria-label="Télécharger Python PDF">PDF</a>
-            <a class="action-pptx" href="python.pptx" download aria-label="Télécharger Python PowerPoint">PPTX</a>
-          </div>
-        </article>
+          <article class="thematique-card">
+            <h3>pnpm</h3>
+            <p>Gestion des paquets Node.js</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="pnpm.html" target="_blank" rel="noopener" aria-label="pnpm - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="pnpm.html" download="pnpm.html" aria-label="Télécharger pnpm HTML">HTML</a>
+              <a class="action-pdf" href="pnpm.pdf" download aria-label="Télécharger pnpm PDF">PDF</a>
+              <a class="action-pptx" href="pnpm.pptx" download aria-label="Télécharger pnpm PowerPoint">PPTX</a>
+            </div>
+          </article>
 
-        <article class="thematique-card">
-          <h2>GitHub Actions</h2>
-          <p>Lancer et suivre les workflows CI/CD</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="github-actions.html" target="_blank" rel="noopener" aria-label="GitHub Actions - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="github-actions.html" download="github-actions.html" aria-label="Télécharger GitHub Actions HTML">HTML</a>
-            <a class="action-pdf" href="github-actions.pdf" download aria-label="Télécharger GitHub Actions PDF">PDF</a>
-            <a class="action-pptx" href="github-actions.pptx" download aria-label="Télécharger GitHub Actions PowerPoint">PPTX</a>
-          </div>
-        </article>
+          <article class="thematique-card">
+            <h3>Vitest</h3>
+            <p>Tests JavaScript et TypeScript</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="vitest.html" target="_blank" rel="noopener" aria-label="Vitest - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="vitest.html" download="vitest.html" aria-label="Télécharger Vitest HTML">HTML</a>
+              <a class="action-pdf" href="vitest.pdf" download aria-label="Télécharger Vitest PDF">PDF</a>
+              <a class="action-pptx" href="vitest.pptx" download aria-label="Télécharger Vitest PowerPoint">PPTX</a>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <article class="thematique-card">
-          <h2>Azure DevOps</h2>
-          <p>Configurer et suivre les pipelines</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="azure-devops.html" target="_blank" rel="noopener" aria-label="Azure DevOps - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="azure-devops.html" download="azure-devops.html" aria-label="Télécharger Azure DevOps HTML">HTML</a>
-            <a class="action-pdf" href="azure-devops.pdf" download aria-label="Télécharger Azure DevOps PDF">PDF</a>
-            <a class="action-pptx" href="azure-devops.pptx" download aria-label="Télécharger Azure DevOps PowerPoint">PPTX</a>
-          </div>
-        </article>
+      <section class="thematique-category" aria-labelledby="interfaces-utilisateur">
+        <h2 id="interfaces-utilisateur">Interfaces utilisateur</h2>
+        <div class="thematiques">
+          <article class="thematique-card">
+            <h3>MUI</h3>
+            <p>Installation et composants Material-UI</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="mui.html" target="_blank" rel="noopener" aria-label="MUI - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="mui.html" download="mui.html" aria-label="Télécharger MUI HTML">HTML</a>
+              <a class="action-pdf" href="mui.pdf" download aria-label="Télécharger MUI PDF">PDF</a>
+              <a class="action-pptx" href="mui.pptx" download aria-label="Télécharger MUI PowerPoint">PPTX</a>
+            </div>
+          </article>
 
-        <article class="thematique-card">
-          <h2>MUI</h2>
-          <p>Installation et composants Material-UI</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="mui.html" target="_blank" rel="noopener" aria-label="MUI - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="mui.html" download="mui.html" aria-label="Télécharger MUI HTML">HTML</a>
-            <a class="action-pdf" href="mui.pdf" download aria-label="Télécharger MUI PDF">PDF</a>
-            <a class="action-pptx" href="mui.pptx" download aria-label="Télécharger MUI PowerPoint">PPTX</a>
-          </div>
-        </article>
+          <article class="thematique-card">
+            <h3>Storybook</h3>
+            <p>Documentation des composants UI</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="storybook.html" target="_blank" rel="noopener" aria-label="Storybook - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="storybook.html" download="storybook.html" aria-label="Télécharger Storybook HTML">HTML</a>
+              <a class="action-pdf" href="storybook.pdf" download aria-label="Télécharger Storybook PDF">PDF</a>
+              <a class="action-pptx" href="storybook.pptx" download aria-label="Télécharger Storybook PowerPoint">PPTX</a>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <article class="thematique-card">
-          <h2>Marp</h2>
-          <p>Créer et exporter des présentations Markdown</p>
-          <div class="thematique-actions">
-            <a class="action-fullscreen" href="marp.html" target="_blank" rel="noopener" aria-label="Marp - Plein écran">Plein écran &#8599;</a>
-            <a class="action-html" href="marp.html" download="marp.html" aria-label="Télécharger Marp HTML">HTML</a>
-            <a class="action-pdf" href="marp.pdf" download aria-label="Télécharger Marp PDF">PDF</a>
-            <a class="action-pptx" href="marp.pptx" download aria-label="Télécharger Marp PowerPoint">PPTX</a>
-          </div>
-        </article>
-      </div>
+      <section class="thematique-category" aria-labelledby="ci-cd-devops">
+        <h2 id="ci-cd-devops">CI/CD et DevOps</h2>
+        <div class="thematiques">
+          <article class="thematique-card">
+            <h3>Azure DevOps</h3>
+            <p>Configurer et suivre les pipelines</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="azure-devops.html" target="_blank" rel="noopener" aria-label="Azure DevOps - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="azure-devops.html" download="azure-devops.html" aria-label="Télécharger Azure DevOps HTML">HTML</a>
+              <a class="action-pdf" href="azure-devops.pdf" download aria-label="Télécharger Azure DevOps PDF">PDF</a>
+              <a class="action-pptx" href="azure-devops.pptx" download aria-label="Télécharger Azure DevOps PowerPoint">PPTX</a>
+            </div>
+          </article>
+
+          <article class="thematique-card">
+            <h3>GitHub Actions</h3>
+            <p>Lancer et suivre les workflows CI/CD</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="github-actions.html" target="_blank" rel="noopener" aria-label="GitHub Actions - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="github-actions.html" download="github-actions.html" aria-label="Télécharger GitHub Actions HTML">HTML</a>
+              <a class="action-pdf" href="github-actions.pdf" download aria-label="Télécharger GitHub Actions PDF">PDF</a>
+              <a class="action-pptx" href="github-actions.pptx" download aria-label="Télécharger GitHub Actions PowerPoint">PPTX</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="thematique-category" aria-labelledby="documentation-presentations">
+        <h2 id="documentation-presentations">Documentation et présentations</h2>
+        <div class="thematiques">
+          <article class="thematique-card">
+            <h3>Marp</h3>
+            <p>Créer et exporter des présentations Markdown</p>
+            <div class="thematique-actions">
+              <a class="action-fullscreen" href="marp.html" target="_blank" rel="noopener" aria-label="Marp - Plein écran">Plein écran &#8599;</a>
+              <a class="action-html" href="marp.html" download="marp.html" aria-label="Télécharger Marp HTML">HTML</a>
+              <a class="action-pdf" href="marp.pdf" download aria-label="Télécharger Marp PDF">PDF</a>
+              <a class="action-pptx" href="marp.pptx" download aria-label="Télécharger Marp PowerPoint">PPTX</a>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
   </body>
 </html>

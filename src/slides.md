@@ -145,7 +145,7 @@ strong {
 
 Maven / pnpm / Vitest / Storybook / Marp
 
-.NET / Python / GitHub Actions / Azure DevOps / MUI
+.NET / Python / Spring / GitHub Actions / Azure DevOps / MUI
 
 Commandes depuis la racine du projet concerné.
 Noms de projets, workflows et identifiants à adapter.
@@ -480,6 +480,69 @@ python -m unittest discover -s tests -p "test_calcul.py" -v
 
 Adapter `tests` et `test_calcul.py` au projet.
 L'option `-v` affiche le détail des tests exécutés.
+
+---
+
+## Spring : démarrer
+
+Site de référence : [Spring](https://spring.io/)
+Documentation : [Spring Boot](https://docs.spring.io/spring-boot/)
+
+**Version de référence (11 novembre 2026) :** Spring Boot 4.1.2.
+**Prérequis :** JDK 17+ et Maven 3.6.3+.
+
+Sur [Spring Initializr](https://start.spring.io/), choisir **Maven**, **Java** et **Spring Web**.
+Générer le projet, extraire l'archive et ouvrir sa racine dans le terminal.
+
+```shell
+mvn spring-boot:run
+```
+
+Le serveur web écoute sur le port `8080` par défaut.
+
+---
+
+## Spring : configurer
+
+Exemple dans `src/main/resources/application.yml` :
+
+```yaml
+spring:
+  application:
+    name: demo
+server:
+  port: 8081
+```
+
+Activer un profil au démarrage :
+
+```shell
+mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
+```
+
+`application-dev.yml`, placé dans le même dossier, complète la configuration
+lorsque le profil `dev` est actif.
+
+---
+
+## Spring : tester et empaqueter
+
+Tester et créer le JAR exécutable :
+
+```shell
+mvn test
+mvn clean verify
+```
+
+Exécuter le JAR généré (nom à adapter au projet) :
+
+```shell
+java -jar target/demo-0.0.1-SNAPSHOT.jar
+java -jar target/demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
+```
+
+Sans Maven installé, utiliser le wrapper fourni par le projet :
+remplacer `mvn` par `.\mvnw.cmd` sous Windows ou `./mvnw` sous macOS/Linux.
 
 ---
 
