@@ -145,7 +145,7 @@ strong {
 
 Maven / pnpm / Vitest / Storybook / Marp
 
-.NET / GitHub Actions / Azure DevOps / MUI
+.NET / Python / GitHub Actions / Azure DevOps / MUI
 
 Commandes depuis la racine du projet concerné.
 Noms de projets, workflows et identifiants à adapter.
@@ -397,6 +397,89 @@ dotnet list Demo.Api package --outdated
 ```
 
 Le filtre suppose que des tests `UserTests` ont été ajoutés.
+
+---
+
+## Python : exécuter
+
+Documentation : [Documentation de Python 3.15.2](https://docs.python.org/3/)
+Site de référence : [Python.org](https://www.python.org/)
+
+**Version de référence (11 novembre 2026) :** Python 3.15.2.
+
+**Prérequis :** Python 3 installé. Utiliser `python3` si nécessaire sous macOS/Linux.
+
+```shell
+python --version
+python script.py
+python -c "print('Bonjour !')"
+```
+
+`script.py` doit exister. `python` seul ouvre l'interpréteur interactif ;
+`exit()` permet de le quitter.
+
+---
+
+## Python : isoler le projet
+
+Créer et activer un environnement virtuel sous Windows (PowerShell) :
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Sous macOS/Linux (bash, zsh) :
+
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Une fois activé, `python` et `python -m pip` ciblent cet environnement.
+`deactivate` permet d'en sortir. Ne pas versionner `.venv`.
+
+---
+
+## Python : gérer les paquets
+
+Dans l'environnement virtuel activé :
+
+```shell
+python -m pip install requests
+python -m pip install --upgrade requests
+python -m pip list
+python -m pip check
+python -m pip uninstall requests
+```
+
+Installer les dépendances depuis un fichier `requirements.txt` existant :
+
+```shell
+python -m pip install -r requirements.txt
+```
+
+---
+
+## Python : lancer les tests
+
+**Prérequis :** des tests `unittest` existants dans le dossier `tests`.
+`unittest` fait partie de la bibliothèque standard de Python.
+
+Découvrir et exécuter tous les fichiers `test_*.py` :
+
+```shell
+python -m unittest discover -s tests -v
+```
+
+Cibler un fichier de tests :
+
+```shell
+python -m unittest discover -s tests -p "test_calcul.py" -v
+```
+
+Adapter `tests` et `test_calcul.py` au projet.
+L'option `-v` affiche le détail des tests exécutés.
 
 ---
 
