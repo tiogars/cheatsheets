@@ -145,7 +145,7 @@ strong {
 
 Maven / pnpm / Vitest / Storybook / Marp
 
-.NET / Python / Spring / GitHub Actions / Azure DevOps / MUI
+.NET / Flutter / Python / Spring / GitHub Actions / Azure DevOps / MUI
 
 Commandes depuis la racine du projet concerné.
 Noms de projets, workflows et identifiants à adapter.
@@ -397,6 +397,82 @@ dotnet list Demo.Api package --outdated
 ```
 
 Le filtre suppose que des tests `UserTests` ont été ajoutés.
+
+---
+
+## Flutter : démarrer
+
+Site de référence : [Flutter](https://flutter.dev/)
+Documentation : [Documentation Flutter](https://docs.flutter.dev/)
+
+**Prérequis :** SDK Flutter installé (Dart inclus) et outils de la plateforme ciblée.
+
+```shell
+flutter --version
+flutter doctor
+flutter create mon_app
+cd mon_app
+```
+
+Corriger les prérequis signalés par `flutter doctor` pour la plateforme visée.
+Les commandes suivantes s'exécutent depuis la racine du projet.
+
+---
+
+## Flutter : exécuter
+
+Avec un appareil connecté ou un émulateur lancé :
+
+```shell
+flutter devices
+flutter run
+```
+
+Alternative web, avec Chrome installé :
+
+```shell
+flutter run -d chrome
+```
+
+En mode débogage : `r` recharge à chaud, `R` redémarre
+et `q` arrête l'exécution.
+
+---
+
+## Flutter : dépendances et tests
+
+Ajouter un paquet, récupérer les dépendances et vérifier les mises à jour :
+
+```shell
+flutter pub add http
+flutter pub get
+flutter pub outdated
+```
+
+Formater le code, l'analyser et lancer les tests unitaires et de widgets :
+
+```shell
+dart format .
+flutter analyze
+flutter test
+```
+
+---
+
+## Flutter : compiler
+
+Choisir la commande correspondant à la plateforme ciblée :
+
+```shell
+flutter build apk --release
+flutter build appbundle --release
+flutter build web --release
+flutter build ipa --release
+```
+
+- **Android :** SDK Android requis ; configurer la signature avant publication.
+- **Web :** les fichiers générés se trouvent dans `build/web`.
+- **iOS :** macOS, Xcode et une configuration de signature sont nécessaires.
 
 ---
 
