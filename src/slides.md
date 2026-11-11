@@ -852,6 +852,37 @@ dans les conteneurs.
 
 ---
 
+## Docker : exemple de compose.yaml
+
+Fichier `compose.yaml` avec un service, un port, un redémarrage automatique,
+un contrôle de santé et un volume :
+
+```yaml
+services:
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - "127.0.0.1:8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - web-data:/var/cache/nginx
+
+volumes:
+  web-data:
+```
+
+`./html` est monté en lecture seule ; `web-data` est un volume nommé persistant.
+Vérifier l'état avec `docker compose ps`.
+
+---
+
 ## Snowflake : choisir le contexte
 
 Site de référence : [Snowflake](https://www.snowflake.com/)
