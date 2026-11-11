@@ -229,6 +229,10 @@ dans les conteneurs.
 Fichier `compose.yaml` avec un service, un port, un redémarrage automatique,
 un contrôle de santé et un volume :
 
+Avant le démarrage, créer à côté de `compose.yaml` le dossier `html` et y placer
+un fichier `index.html` ; le montage de `./html` masque le contenu fourni par
+l’image Nginx.
+
 ```yaml
 services:
   web:
