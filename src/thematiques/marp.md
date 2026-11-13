@@ -215,3 +215,24 @@ make build
 
 Thèmes intégrés : `default`, `gaia` et `uncover`.
 `<!-- _class: lead -->` applique une classe à la diapositive courante.
+
+---
+
+## Marp : mettre à jour
+
+Vérifier, puis mettre à jour Marp CLI dans le projet :
+
+```shell
+pnpm exec marp --version
+pnpm outdated @marp-team/marp-cli
+pnpm update @marp-team/marp-cli --latest
+```
+
+Dans ce dépôt, régénérer ensuite les exports pour contrôler le rendu :
+
+```shell
+make build
+```
+
+L'extension **Marp for VS Code** se met à jour depuis la vue Extensions.
+Consulter les [notes de version](https://github.com/marp-team/marp-cli/releases).

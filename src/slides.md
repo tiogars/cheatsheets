@@ -234,6 +234,19 @@ git stash apply "stash@{0}"
 
 ---
 
+## Git : mettre à jour
+
+Vérifier la version installée avec `git --version`, puis la mettre à jour selon l'installation :
+
+- Git for Windows : `git update-git-for-windows`
+- macOS (Homebrew) : `brew upgrade git`
+- Debian/Ubuntu (APT) : `sudo apt update && sudo apt install --only-upgrade git`
+
+Sous Windows, fermer les terminaux et éditeurs qui utilisent Git avant la mise à jour.
+Les dépôts locaux et la configuration (`~/.gitconfig`) sont conservés.
+
+---
+
 ## Maven : compiler et tester
 
 **Versions de référence (11 novembre 2026) :** JDK 25.0.5 (LTS) et Apache Maven 3.10.0.
@@ -271,6 +284,26 @@ mvn -pl api -am verify
 mvn -Pproduction package
 mvn spring-boot:run
 ```
+
+---
+
+## Maven : mettre à jour
+
+Mettre à jour l'installation locale de Maven :
+
+- SDKMAN! (macOS, Linux, WSL) : `sdk upgrade maven`
+- macOS (Homebrew) : `brew upgrade maven`
+- Archive (Windows) : extraire la nouvelle archive et mettre à jour `PATH`
+
+Fixer la version du Maven Wrapper, puis repérer les plugins et dépendances obsolètes :
+
+```shell
+mvn wrapper:wrapper "-Dmaven=3.10.0"
+mvn versions:display-plugin-updates
+mvn versions:display-dependency-updates
+```
+
+`wrapper:wrapper` met à jour `.mvn/wrapper/maven-wrapper.properties` : versionner ce fichier.
 
 ---
 
@@ -317,6 +350,30 @@ pnpm exec tsc --noEmit
 ```
 
 `tsc` nécessite TypeScript et un `tsconfig.json` adapté.
+
+---
+
+## pnpm : mettre à jour
+
+Mettre à jour pnpm et, le cas échéant, la version épinglée dans `packageManager` :
+
+```shell
+pnpm self-update
+pnpm runtime set node lts -g
+```
+
+Avec Homebrew, utiliser `brew upgrade pnpm` ; avec Corepack, `self-update` ne modifie que la version épinglée.
+Si pnpm ne gère pas Node.js, utiliser l'installateur de Node.js au lieu de `runtime set`.
+
+Mettre à jour les dépendances du projet :
+
+```shell
+pnpm outdated
+pnpm update
+pnpm update --latest
+```
+
+`update` respecte les plages de `package.json` ; `--latest` peut changer de version majeure.
 
 ---
 
@@ -388,6 +445,24 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 Toute variable `VITE_` est intégrée au code livré au navigateur : n’y placer aucun secret.
 Le fichier `.env.local` est destiné aux réglages locaux et doit rester ignoré par Git.
+
+---
+
+## Vite : mettre à jour
+
+Lire le [guide de migration](https://vite.dev/guide/migration) avant un changement de version majeure.
+
+Depuis la racine du projet, vérifier Node.js, puis mettre à jour Vite et son plugin :
+
+```shell
+node --version
+pnpm outdated vite @vitejs/plugin-react
+pnpm update vite @vitejs/plugin-react --latest
+pnpm run build
+```
+
+`@vitejs/plugin-react` correspond au modèle `react-ts` : adapter la liste aux plugins du projet.
+Relancer ensuite `pnpm run dev` pour contrôler l'application.
 
 ---
 
@@ -466,6 +541,24 @@ Garder `@vitest/coverage-v8` sur la même version majeure que Vitest.
 
 ---
 
+## Vitest : mettre à jour
+
+Lire le [guide de migration](https://vitest.dev/guide/migration) avant un changement de version majeure.
+
+Mettre à jour Vitest et le fournisseur de couverture ensemble :
+
+```shell
+pnpm exec vitest --version
+pnpm outdated vitest @vitest/coverage-v8
+pnpm update vitest @vitest/coverage-v8 --latest
+pnpm exec vitest run
+```
+
+Retirer `@vitest/coverage-v8` des commandes s'il n'est pas installé.
+Vérifier aussi les versions de Node.js et de Vite exigées par la nouvelle version.
+
+---
+
 ## Storybook : initialiser
 
 Documentation : [Storybook: Frontend workshop for UI development](https://storybook.js.org/)
@@ -505,6 +598,24 @@ Prévisualiser la sortie par défaut :
 ```shell
 pnpm dlx serve storybook-static --listen 6006
 ```
+
+---
+
+## Storybook : mettre à jour
+
+Depuis la racine du dépôt, mettre à jour tous les paquets Storybook :
+
+```shell
+pnpm dlx storybook@latest upgrade
+pnpm run build-storybook
+```
+
+La commande applique les automigrations, puis lance un contrôle de santé.
+
+Elle ne franchit qu'une version majeure à la fois : depuis Storybook 8,
+lancer `pnpm dlx storybook@9 upgrade`, puis `pnpm dlx storybook@latest upgrade`.
+
+Guide : [Upgrading Storybook](https://storybook.js.org/docs/releases/upgrading)
 
 ---
 
@@ -550,6 +661,28 @@ dotnet list Demo.Api package --outdated
 ```
 
 Le filtre suppose que des tests `UserTests` ont été ajoutés.
+
+---
+
+## .NET : mettre à jour
+
+Comparer les SDK et runtimes installés aux dernières versions publiées :
+
+```shell
+dotnet --list-sdks
+dotnet sdk check
+```
+
+Sous Windows, mettre à jour .NET 10 ou installer .NET 11 :
+
+```shell
+winget upgrade --id Microsoft.DotNet.SDK.10 --source winget
+winget install --id Microsoft.DotNet.SDK.11 --source winget
+```
+
+Sous macOS/Linux, utiliser l'installateur ou le gestionnaire de paquets d'origine.
+Pour changer de version majeure, modifier `<TargetFramework>` (par exemple `net11.0`)
+et `global.json` s'il existe, puis lancer `dotnet build` et `dotnet test`.
 
 ---
 
@@ -626,6 +759,30 @@ flutter build ipa --release
 - **Android :** SDK Android requis ; configurer la signature avant publication.
 - **Web :** les fichiers générés se trouvent dans `build/web`.
 - **iOS :** macOS, Xcode et une configuration de signature sont nécessaires.
+
+---
+
+## Flutter : mettre à jour
+
+Mettre à jour le SDK Flutter, Dart inclus, sur le canal courant :
+
+```shell
+flutter channel
+flutter upgrade
+```
+
+Puis, depuis la racine du projet :
+
+```shell
+flutter pub upgrade
+flutter pub upgrade --major-versions
+dart fix --apply
+flutter test
+```
+
+`--major-versions` modifie les contraintes de `pubspec.yaml`.
+Consulter les [changements incompatibles](https://docs.flutter.dev/release/breaking-changes)
+et vérifier les modifications de `dart fix` avant de les valider.
 
 ---
 
@@ -712,6 +869,29 @@ L'option `-v` affiche le détail des tests exécutés.
 
 ---
 
+## Python : mettre à jour
+
+Sous Windows, avec le gestionnaire d'installation Python :
+
+```powershell
+py list
+py install --update
+```
+
+`--update` met à jour les versions gérées par `py` ; `py install 3.15` installe une version précise.
+Sous macOS/Linux, utiliser l'installateur de python.org, Homebrew ou le gestionnaire de paquets.
+
+Après un changement de version mineure, désactiver puis recréer `.venv`,
+le réactiver et réinstaller les dépendances :
+
+```shell
+python -m venv --clear .venv
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+---
+
 ## Spring : démarrer
 
 Site de référence : [Spring](https://spring.io/)
@@ -772,6 +952,29 @@ java -jar target/demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
 
 Sans Maven installé, utiliser le wrapper fourni par le projet :
 remplacer `mvn` par `.\mvnw.cmd` sous Windows ou `./mvnw` sous macOS/Linux.
+
+---
+
+## Spring : mettre à jour
+
+Lister les versions disponibles du parent Spring Boot :
+
+```shell
+mvn versions:display-parent-updates
+```
+
+Modifier la version du parent dans `pom.xml` :
+
+```xml
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-parent</artifactId>
+  <version>4.1.2</version>
+</parent>
+```
+
+Adapter la propriété `java.version` si nécessaire, puis lancer `mvn clean verify`.
+Lire les notes de version et guides de migration du [wiki Spring Boot](https://github.com/spring-projects/spring-boot/wiki).
 
 ---
 
@@ -887,6 +1090,30 @@ Vérifier l'état avec `docker compose ps`.
 
 ---
 
+## Docker : mettre à jour
+
+Docker Desktop : vérifier, puis installer les mises à jour (ou **Settings > Software updates**) :
+
+```shell
+docker version
+docker desktop update --check-only
+docker desktop update
+```
+
+Sous Linux, mettre à jour les paquets Docker Engine avec le gestionnaire de paquets.
+
+Récupérer les images récentes, puis recréer les conteneurs concernés :
+
+```shell
+docker compose pull
+docker compose up -d
+docker build --pull -t mon-app:dev .
+```
+
+Pour une étiquette figée (`nginx:1.27-alpine`), modifier d'abord `compose.yaml`.
+
+---
+
 ## Snowflake : choisir le contexte
 
 Site de référence : [Snowflake](https://www.snowflake.com/)
@@ -969,6 +1196,30 @@ Un entrepôt démarré consomme des crédits, même sans requête en cours.
 
 ---
 
+## Snowflake : mettre à jour
+
+Snowflake met à jour le service et Snowsight automatiquement.
+Afficher la version du compte :
+
+```sql
+SELECT CURRENT_VERSION();
+```
+
+Mettre à jour les clients locaux selon leur mode d'installation :
+
+```shell
+snow upgrade
+uv tool upgrade snowflake-cli
+brew upgrade snowflake-cli
+python -m pip install --upgrade snowflake-connector-python
+```
+
+`snow upgrade` concerne l'installateur autonome de Snowflake CLI
+et reste sur la même version majeure.
+Mettre à jour le connecteur Python dans l'environnement virtuel du projet.
+
+---
+
 ## GitHub Actions : lancer
 
 **Version de référence (11 novembre 2026) :** GitHub CLI (`gh`) 2.103.3.
@@ -1001,6 +1252,28 @@ gh run download 123456789 --dir artifacts
 
 `watch --exit-status` signale un échec via le code de sortie.
 Le téléchargement suppose des artefacts publiés par le workflow.
+
+---
+
+## GitHub Actions : mettre à jour
+
+Vérifier la version de GitHub CLI avec `gh --version`, puis la mettre à jour :
+
+- Windows (WinGet) : `winget upgrade --id GitHub.cli --source winget`
+- macOS (Homebrew) : `brew upgrade gh`
+- Debian/Ubuntu (APT) : `sudo apt update && sudo apt install gh`
+
+Faire proposer les nouvelles versions des actions (`uses:`) par Dependabot,
+dans `.github/dependabot.yml` :
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+```
 
 ---
 
@@ -1040,6 +1313,27 @@ az pipelines runs artifact download --run-id 1234 --artifact-name drop --path ar
 
 `--open` ouvre le suivi et les logs dans le navigateur.
 `drop` doit correspondre à un artefact publié par la pipeline.
+
+---
+
+## Azure DevOps : mettre à jour
+
+Vérifier les versions, puis mettre à jour Azure CLI et ses extensions :
+
+```shell
+az version
+az upgrade
+az extension update --name azure-devops
+```
+
+`az upgrade` met aussi à jour les extensions installées ; la dernière commande
+ne met à jour que l'extension Azure DevOps.
+
+Activer la mise à jour automatique, désactivée par défaut :
+
+```shell
+az config set auto-upgrade.enable=yes
+```
 
 ---
 
@@ -1088,6 +1382,26 @@ export default function Formulaire() {
 ```
 
 Ajouter un gestionnaire `onSubmit` pour persister les données.
+
+---
+
+## MUI : mettre à jour
+
+Avant un changement de version majeure, remplacer les API dépréciées,
+puis suivre le [guide de migration](https://mui.com/material-ui/migration/upgrade-to-v9/) :
+
+```shell
+pnpm dlx @mui/codemod@latest deprecations/all src
+```
+
+Mettre à jour ensemble les paquets MUI du projet :
+
+```shell
+pnpm outdated "@mui/*"
+pnpm update "@mui/*" --latest
+```
+
+Vérifier le diff avec Git, puis lancer les tests et le build.
 
 ---
 
@@ -1159,6 +1473,27 @@ make build
 
 Thèmes intégrés : `default`, `gaia` et `uncover`.
 `<!-- _class: lead -->` applique une classe à la diapositive courante.
+
+---
+
+## Marp : mettre à jour
+
+Vérifier, puis mettre à jour Marp CLI dans le projet :
+
+```shell
+pnpm exec marp --version
+pnpm outdated @marp-team/marp-cli
+pnpm update @marp-team/marp-cli --latest
+```
+
+Dans ce dépôt, régénérer ensuite les exports pour contrôler le rendu :
+
+```shell
+make build
+```
+
+L'extension **Marp for VS Code** se met à jour depuis la vue Extensions.
+Consulter les [notes de version](https://github.com/marp-team/marp-cli/releases).
 
 ---
 
@@ -1238,6 +1573,29 @@ vérifier le site avant, et ne jamais modifier la branche `gh-pages` à la main.
 
 ---
 
+## MkDocs : mettre à jour
+
+Dans l'environnement virtuel activé :
+
+```shell
+python -m pip list --outdated
+python -m pip install --upgrade mkdocs
+mkdocs --version
+```
+
+Mettre aussi à jour les thèmes et extensions installés séparément,
+puis reporter les nouvelles versions dans `requirements.txt` s'il existe.
+
+Vérifier le site avant de le publier :
+
+```shell
+mkdocs build --strict
+```
+
+Consulter les [notes de version](https://www.mkdocs.org/about/release-notes/).
+
+---
+
 ## Mermaid : écrire un diagramme
 
 Site : [Mermaid](https://mermaid.js.org/)
@@ -1300,3 +1658,25 @@ code source pour pouvoir le modifier et le suivre avec Git.
 
 En cas d'erreur, vérifier le mot-clé du diagramme, les identifiants de nœuds et
 les caractères réservés dans les libellés.
+
+---
+
+## Mermaid : mettre à jour
+
+Mermaid Live, GitHub et GitLab intègrent leur propre version de Mermaid,
+mise à jour par chaque plateforme.
+
+Dans un projet JavaScript :
+
+```shell
+pnpm list mermaid
+pnpm update mermaid --latest
+```
+
+Sur une page web, changer la version majeure dans l'import CDN :
+
+```js
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12/dist/mermaid.esm.min.mjs";
+```
+
+Après une mise à jour, vérifier le rendu des diagrammes existants.

@@ -256,3 +256,27 @@ volumes:
 
 `./html` est monté en lecture seule ; `web-data` est un volume nommé persistant.
 Vérifier l'état avec `docker compose ps`.
+
+---
+
+## Docker : mettre à jour
+
+Docker Desktop : vérifier, puis installer les mises à jour (ou **Settings > Software updates**) :
+
+```shell
+docker version
+docker desktop update --check-only
+docker desktop update
+```
+
+Sous Linux, mettre à jour les paquets Docker Engine avec le gestionnaire de paquets.
+
+Récupérer les images récentes, puis recréer les conteneurs concernés :
+
+```shell
+docker compose pull
+docker compose up -d
+docker build --pull -t mon-app:dev .
+```
+
+Pour une étiquette figée (`nginx:1.27-alpine`), modifier d'abord `compose.yaml`.

@@ -219,3 +219,21 @@ pnpm exec vitest run --coverage
 ```
 
 Garder `@vitest/coverage-v8` sur la même version majeure que Vitest.
+
+---
+
+## Vitest : mettre à jour
+
+Lire le [guide de migration](https://vitest.dev/guide/migration) avant un changement de version majeure.
+
+Mettre à jour Vitest et le fournisseur de couverture ensemble :
+
+```shell
+pnpm exec vitest --version
+pnpm outdated vitest @vitest/coverage-v8
+pnpm update vitest @vitest/coverage-v8 --latest
+pnpm exec vitest run
+```
+
+Retirer `@vitest/coverage-v8` des commandes s'il n'est pas installé.
+Vérifier aussi les versions de Node.js et de Vite exigées par la nouvelle version.

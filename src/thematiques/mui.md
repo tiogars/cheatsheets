@@ -192,3 +192,23 @@ export default function Formulaire() {
 ```
 
 Ajouter un gestionnaire `onSubmit` pour persister les données.
+
+---
+
+## MUI : mettre à jour
+
+Avant un changement de version majeure, remplacer les API dépréciées,
+puis suivre le [guide de migration](https://mui.com/material-ui/migration/upgrade-to-v9/) :
+
+```shell
+pnpm dlx @mui/codemod@latest deprecations/all src
+```
+
+Mettre à jour ensemble les paquets MUI du projet :
+
+```shell
+pnpm outdated "@mui/*"
+pnpm update "@mui/*" --latest
+```
+
+Vérifier le diff avec Git, puis lancer les tests et le build.

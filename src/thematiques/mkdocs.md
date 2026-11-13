@@ -220,3 +220,26 @@ mkdocs gh-deploy
 
 `gh-deploy` publie sans relecture et inclut les fichiers non suivis ou non validés :
 vérifier le site avant, et ne jamais modifier la branche `gh-pages` à la main.
+
+---
+
+## MkDocs : mettre à jour
+
+Dans l'environnement virtuel activé :
+
+```shell
+python -m pip list --outdated
+python -m pip install --upgrade mkdocs
+mkdocs --version
+```
+
+Mettre aussi à jour les thèmes et extensions installés séparément,
+puis reporter les nouvelles versions dans `requirements.txt` s'il existe.
+
+Vérifier le site avant de le publier :
+
+```shell
+mkdocs build --strict
+```
+
+Consulter les [notes de version](https://www.mkdocs.org/about/release-notes/).

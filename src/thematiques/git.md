@@ -224,3 +224,16 @@ git stash apply "stash@{0}"
 
 `-u` inclut les fichiers non suivis, mais pas les fichiers ignorés.
 `apply` conserve le stash ; résoudre les conflits avant de continuer.
+
+---
+
+## Git : mettre à jour
+
+Vérifier la version installée avec `git --version`, puis la mettre à jour selon l'installation :
+
+- Git for Windows : `git update-git-for-windows`
+- macOS (Homebrew) : `brew upgrade git`
+- Debian/Ubuntu (APT) : `sudo apt update && sudo apt install --only-upgrade git`
+
+Sous Windows, fermer les terminaux et éditeurs qui utilisent Git avant la mise à jour.
+Les dépôts locaux et la configuration (`~/.gitconfig`) sont conservés.

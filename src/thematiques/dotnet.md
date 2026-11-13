@@ -189,3 +189,25 @@ dotnet list Demo.Api package --outdated
 ```
 
 Le filtre suppose que des tests `UserTests` ont été ajoutés.
+
+---
+
+## .NET : mettre à jour
+
+Comparer les SDK et runtimes installés aux dernières versions publiées :
+
+```shell
+dotnet --list-sdks
+dotnet sdk check
+```
+
+Sous Windows, mettre à jour .NET 10 ou installer .NET 11 :
+
+```shell
+winget upgrade --id Microsoft.DotNet.SDK.10 --source winget
+winget install --id Microsoft.DotNet.SDK.11 --source winget
+```
+
+Sous macOS/Linux, utiliser l'installateur ou le gestionnaire de paquets d'origine.
+Pour changer de version majeure, modifier `<TargetFramework>` (par exemple `net11.0`)
+et `global.json` s'il existe, puis lancer `dotnet build` et `dotnet test`.

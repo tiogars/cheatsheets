@@ -226,3 +226,27 @@ ALTER WAREHOUSE MON_WH SET AUTO_SUSPEND = 60 AUTO_RESUME = TRUE;
 
 Auto-suspension après inactivité (seuil de 60 secondes), reprise au besoin.
 Un entrepôt démarré consomme des crédits, même sans requête en cours.
+
+---
+
+## Snowflake : mettre à jour
+
+Snowflake met à jour le service et Snowsight automatiquement.
+Afficher la version du compte :
+
+```sql
+SELECT CURRENT_VERSION();
+```
+
+Mettre à jour les clients locaux selon leur mode d'installation :
+
+```shell
+snow upgrade
+uv tool upgrade snowflake-cli
+brew upgrade snowflake-cli
+python -m pip install --upgrade snowflake-connector-python
+```
+
+`snow upgrade` concerne l'installateur autonome de Snowflake CLI
+et reste sur la même version majeure.
+Mettre à jour le connecteur Python dans l'environnement virtuel du projet.
