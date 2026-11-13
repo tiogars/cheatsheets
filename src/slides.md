@@ -686,6 +686,119 @@ et `global.json` s'il existe, puis lancer `dotnet build` et `dotnet test`.
 
 ---
 
+## C# : démarrer
+
+Documentation : [Guide C#](https://learn.microsoft.com/fr-fr/dotnet/csharp/)
+et [visite guidée](https://learn.microsoft.com/fr-fr/dotnet/csharp/tour-of-csharp/).
+
+**Prérequis :** SDK .NET installé.
+
+```shell
+dotnet new console -n Demo
+cd Demo
+dotnet run
+dotnet watch
+```
+
+Le projet console généré utilise les instructions de niveau supérieur.
+`dotnet watch` relance l’application lors des modifications.
+
+---
+
+## C# : types et contrôle de flux
+
+`var` déduit le type à la compilation ; `string?` indique une valeur nullable.
+
+```csharp
+string name = "Ada";
+string? nickname = null;
+int age = 36;
+var message = $"Bonjour {name}, {age} ans";
+```
+
+Conditions, correspondance de motifs et boucle :
+
+```csharp
+if (age >= 18)
+    Console.WriteLine(message);
+
+string category = age switch
+{
+    < 13 => "enfant",
+    < 18 => "adolescent",
+    _ => "adulte"
+};
+
+foreach (var character in name)
+    Console.WriteLine(character);
+```
+
+---
+
+## C# : collections et LINQ
+
+LINQ filtre et transforme une séquence ; `ToArray` matérialise le résultat.
+
+```csharp
+using System.Linq;
+
+int[] numbers = [1, 2, 3, 4, 5];
+int[] evenSquares = numbers
+    .Where(n => n % 2 == 0)
+    .Select(n => n * n)
+    .ToArray();
+```
+
+Les collections génériques courantes incluent `List<T>`,
+`Dictionary<TKey, TValue>` et `HashSet<T>`.
+
+---
+
+## C# : méthodes et types
+
+Les paramètres sont typés ; une expression lambda peut être utilisée
+pour représenter une fonction.
+
+```csharp
+static int Add(int left, int right) => left + right;
+
+int result = Add(2, 3);
+Func<int, int> doubleValue = value => value * 2;
+```
+
+Un `record` convient aux données dont l’égalité dépend des valeurs :
+
+```csharp
+var person = new Person("Ada", 36);
+var adult = person with { Age = 37 };
+
+public record Person(string Name, int Age);
+```
+
+---
+
+## C# : programmation asynchrone
+
+`await` attend une opération sans bloquer le thread appelant.
+Propager un `CancellationToken` permet à l’appelant d’annuler le travail.
+
+```csharp
+static async Task<string> ReadAsync(
+    HttpClient client,
+    CancellationToken cancellationToken)
+{
+    using var response = await client.GetAsync(
+        "https://example.com",
+        cancellationToken);
+    response.EnsureSuccessStatusCode();
+    return await response.Content.ReadAsStringAsync(cancellationToken);
+}
+```
+
+Réutiliser `HttpClient` plutôt que d’en créer un par requête.
+
+---
+
 ## Flutter : démarrer
 
 Site de référence : [Flutter](https://flutter.dev/)
