@@ -227,3 +227,26 @@ python -m unittest discover -s tests -p "test_calcul.py" -v
 
 Adapter `tests` et `test_calcul.py` au projet.
 L'option `-v` affiche le détail des tests exécutés.
+
+---
+
+## Python : mettre à jour
+
+Sous Windows, avec le gestionnaire d'installation Python :
+
+```powershell
+py list
+py install --update
+```
+
+`--update` met à jour les versions gérées par `py` ; `py install 3.15` installe une version précise.
+Sous macOS/Linux, utiliser l'installateur de python.org, Homebrew ou le gestionnaire de paquets.
+
+Après un changement de version mineure, désactiver puis recréer `.venv`,
+le réactiver et réinstaller les dépendances :
+
+```shell
+python -m venv --clear .venv
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```

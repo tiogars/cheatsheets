@@ -186,3 +186,21 @@ Prévisualiser la sortie par défaut :
 ```shell
 pnpm dlx serve storybook-static --listen 6006
 ```
+
+---
+
+## Storybook : mettre à jour
+
+Depuis la racine du dépôt, mettre à jour tous les paquets Storybook :
+
+```shell
+pnpm dlx storybook@latest upgrade
+pnpm run build-storybook
+```
+
+La commande applique les automigrations, puis lance un contrôle de santé.
+
+Elle ne franchit qu'une version majeure à la fois : depuis Storybook 8,
+lancer `pnpm dlx storybook@9 upgrade`, puis `pnpm dlx storybook@latest upgrade`.
+
+Guide : [Upgrading Storybook](https://storybook.js.org/docs/releases/upgrading)

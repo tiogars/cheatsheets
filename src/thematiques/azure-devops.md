@@ -184,3 +184,24 @@ az pipelines runs artifact download --run-id 1234 --artifact-name drop --path ar
 
 `--open` ouvre le suivi et les logs dans le navigateur.
 `drop` doit correspondre à un artefact publié par la pipeline.
+
+---
+
+## Azure DevOps : mettre à jour
+
+Vérifier les versions, puis mettre à jour Azure CLI et ses extensions :
+
+```shell
+az version
+az upgrade
+az extension update --name azure-devops
+```
+
+`az upgrade` met aussi à jour les extensions installées ; la dernière commande
+ne met à jour que l'extension Azure DevOps.
+
+Activer la mise à jour automatique, désactivée par défaut :
+
+```shell
+az config set auto-upgrade.enable=yes
+```

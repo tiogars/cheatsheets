@@ -180,3 +180,25 @@ gh run download 123456789 --dir artifacts
 
 `watch --exit-status` signale un échec via le code de sortie.
 Le téléchargement suppose des artefacts publiés par le workflow.
+
+---
+
+## GitHub Actions : mettre à jour
+
+Vérifier la version de GitHub CLI avec `gh --version`, puis la mettre à jour :
+
+- Windows (WinGet) : `winget upgrade --id GitHub.cli --source winget`
+- macOS (Homebrew) : `brew upgrade gh`
+- Debian/Ubuntu (APT) : `sudo apt update && sudo apt install gh`
+
+Faire proposer les nouvelles versions des actions (`uses:`) par Dependabot,
+dans `.github/dependabot.yml` :
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+```

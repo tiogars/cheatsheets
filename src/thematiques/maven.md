@@ -184,3 +184,23 @@ mvn -pl api -am verify
 mvn -Pproduction package
 mvn spring-boot:run
 ```
+
+---
+
+## Maven : mettre à jour
+
+Mettre à jour l'installation locale de Maven :
+
+- SDKMAN! (macOS, Linux, WSL) : `sdk upgrade maven`
+- macOS (Homebrew) : `brew upgrade maven`
+- Archive (Windows) : extraire la nouvelle archive et mettre à jour `PATH`
+
+Fixer la version du Maven Wrapper, puis repérer les plugins et dépendances obsolètes :
+
+```shell
+mvn wrapper:wrapper "-Dmaven=3.10.0"
+mvn versions:display-plugin-updates
+mvn versions:display-dependency-updates
+```
+
+`wrapper:wrapper` met à jour `.mvn/wrapper/maven-wrapper.properties` : versionner ce fichier.

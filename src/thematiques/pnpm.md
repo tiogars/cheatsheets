@@ -190,3 +190,27 @@ pnpm exec tsc --noEmit
 ```
 
 `tsc` nécessite TypeScript et un `tsconfig.json` adapté.
+
+---
+
+## pnpm : mettre à jour
+
+Mettre à jour pnpm et, le cas échéant, la version épinglée dans `packageManager` :
+
+```shell
+pnpm self-update
+pnpm runtime set node lts -g
+```
+
+Avec Homebrew, utiliser `brew upgrade pnpm` ; avec Corepack, `self-update` ne modifie que la version épinglée.
+Si pnpm ne gère pas Node.js, utiliser l'installateur de Node.js au lieu de `runtime set`.
+
+Mettre à jour les dépendances du projet :
+
+```shell
+pnpm outdated
+pnpm update
+pnpm update --latest
+```
+
+`update` respecte les plages de `package.json` ; `--latest` peut changer de version majeure.

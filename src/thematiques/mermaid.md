@@ -209,3 +209,25 @@ code source pour pouvoir le modifier et le suivre avec Git.
 
 En cas d'erreur, vérifier le mot-clé du diagramme, les identifiants de nœuds et
 les caractères réservés dans les libellés.
+
+---
+
+## Mermaid : mettre à jour
+
+Mermaid Live, GitHub et GitLab intègrent leur propre version de Mermaid,
+mise à jour par chaque plateforme.
+
+Dans un projet JavaScript :
+
+```shell
+pnpm list mermaid
+pnpm update mermaid --latest
+```
+
+Sur une page web, changer la version majeure dans l'import CDN :
+
+```js
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12/dist/mermaid.esm.min.mjs";
+```
+
+Après une mise à jour, vérifier le rendu des diagrammes existants.

@@ -220,3 +220,27 @@ flutter build ipa --release
 - **Android :** SDK Android requis ; configurer la signature avant publication.
 - **Web :** les fichiers générés se trouvent dans `build/web`.
 - **iOS :** macOS, Xcode et une configuration de signature sont nécessaires.
+
+---
+
+## Flutter : mettre à jour
+
+Mettre à jour le SDK Flutter, Dart inclus, sur le canal courant :
+
+```shell
+flutter channel
+flutter upgrade
+```
+
+Puis, depuis la racine du projet :
+
+```shell
+flutter pub upgrade
+flutter pub upgrade --major-versions
+dart fix --apply
+flutter test
+```
+
+`--major-versions` modifie les contraintes de `pubspec.yaml`.
+Consulter les [changements incompatibles](https://docs.flutter.dev/release/breaking-changes)
+et vérifier les modifications de `dart fix` avant de les valider.

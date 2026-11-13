@@ -215,3 +215,21 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 Toute variable `VITE_` est intégrée au code livré au navigateur : n’y placer aucun secret.
 Le fichier `.env.local` est destiné aux réglages locaux et doit rester ignoré par Git.
+
+---
+
+## Vite : mettre à jour
+
+Lire le [guide de migration](https://vite.dev/guide/migration) avant un changement de version majeure.
+
+Depuis la racine du projet, vérifier Node.js, puis mettre à jour Vite et son plugin :
+
+```shell
+node --version
+pnpm outdated vite @vitejs/plugin-react
+pnpm update vite @vitejs/plugin-react --latest
+pnpm run build
+```
+
+`@vitejs/plugin-react` correspond au modèle `react-ts` : adapter la liste aux plugins du projet.
+Relancer ensuite `pnpm run dev` pour contrôler l'application.

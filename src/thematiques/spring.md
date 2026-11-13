@@ -207,3 +207,26 @@ java -jar target/demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
 
 Sans Maven installé, utiliser le wrapper fourni par le projet :
 remplacer `mvn` par `.\mvnw.cmd` sous Windows ou `./mvnw` sous macOS/Linux.
+
+---
+
+## Spring : mettre à jour
+
+Lister les versions disponibles du parent Spring Boot :
+
+```shell
+mvn versions:display-parent-updates
+```
+
+Modifier la version du parent dans `pom.xml` :
+
+```xml
+<parent>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-parent</artifactId>
+  <version>4.1.2</version>
+</parent>
+```
+
+Adapter la propriété `java.version` si nécessaire, puis lancer `mvn clean verify`.
+Lire les notes de version et guides de migration du [wiki Spring Boot](https://github.com/spring-projects/spring-boot/wiki).
