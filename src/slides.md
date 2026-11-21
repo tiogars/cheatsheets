@@ -1793,3 +1793,143 @@ import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12/dist/mermaid.esm.mi
 ```
 
 Après une mise à jour, vérifier le rendu des diagrammes existants.
+
+---
+
+## Restic : installer
+
+Documentation : [Installation](https://restic.readthedocs.io/en/stable/020_installation.html)
+
+Restic peut être installé avec le gestionnaire de paquets ou depuis une archive
+contenant l'exécutable officiel.
+
+```shell
+# Debian/Ubuntu
+sudo apt update
+sudo apt install restic
+
+# Windows
+winget install restic.restic
+
+# macOS
+brew install restic
+```
+
+Vérifier l'exécutable avant la configuration :
+
+```shell
+restic version
+```
+
+---
+
+## Restic : préparer un dépôt
+
+Documentation : [Préparer un dépôt](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html)
+
+Créer un dossier dédié, puis initialiser le dépôt avec un mot de passe :
+
+```shell
+mkdir -p /srv/restic-repo
+export RESTIC_PASSWORD="mot-de-passe-long-et-secret"
+export RESTIC_REPOSITORY="/srv/restic-repo"
+restic init
+```
+
+Conserver le mot de passe hors du dépôt. Sans lui, les données ne peuvent pas être déchiffrées.
+Pour un stockage distant, adapter `RESTIC_REPOSITORY`, par exemple `sftp:user@host:/srv/restic-repo`.
+
+---
+
+## Restic : sauvegarder
+
+Créer une première sauvegarde et observer les instantanés :
+
+```shell
+restic backup /srv/data
+restic backup --exclude-caches --exclude-file .restic-excludes /srv/data
+restic snapshots
+```
+
+Exemple de fichier `.restic-excludes` :
+
+```text
+/srv/data/cache
+*.tmp
+*.log
+```
+
+Les sauvegardes suivantes ne transmettent que les blocs modifiés.
+Ajouter des balises pour retrouver facilement les sauvegardes :
+
+```shell
+restic backup --tag documents /srv/data/documents
+```
+
+---
+
+## Restic : restaurer
+
+Lister les instantanés, choisir son ID, puis restaurer :
+
+```shell
+restic snapshots
+restic restore latest --target /tmp/restic-restore
+restic restore <snapshot-id> --target /srv/restore
+```
+
+Pour restaurer seulement un chemin :
+
+```shell
+restic restore latest --target /tmp/restic-restore \
+  --include /srv/data/documents
+```
+
+Ne pas restaurer par-dessus les données actives sans vérification préalable.
+Comparer le contenu restauré avant remplacement.
+
+---
+
+## Restic : contrôler et nettoyer
+
+Vérifier la structure du dépôt sans lire tous les blocs :
+
+```shell
+restic check
+restic check --read-data
+```
+
+Afficher les règles de conservation puis supprimer les instantanés obsolètes :
+
+```shell
+restic forget --dry-run \
+  --keep-daily 7 --keep-weekly 5 --keep-monthly 12
+restic forget --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --prune
+```
+
+Toujours tester `--dry-run`, puis conserver une sauvegarde hors ligne
+pour la récupération après perte ou panne du dépôt.
+
+---
+
+## Restic : automatiser sans secret
+
+Conserver le mot de passe dans un gestionnaire de secrets ou un fichier protégé :
+
+```shell
+export RESTIC_PASSWORD_FILE="/root/.config/restic/password"
+export RESTIC_REPOSITORY="/srv/restic-repo"
+
+restic backup /srv/data
+restic check
+restic forget --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --prune
+```
+
+Réserver `chmod 600` au fichier du mot de passe et ne pas inclure de secret
+dans un script versionné ou un fichier de planification.
+
+Exemple de planification quotidienne avec cron :
+
+```cron
+0 2 * * * RESTIC_PASSWORD_FILE=/root/.config/restic/password RESTIC_REPOSITORY=/srv/restic-repo restic backup /srv/data
+```
